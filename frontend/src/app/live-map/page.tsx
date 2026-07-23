@@ -247,21 +247,21 @@ export default function LiveMapPage() {
   });
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-zinc-900 text-zinc-100 overflow-hidden">
+    <div className="flex-1 flex flex-col min-h-full lg:h-full bg-zinc-900 text-zinc-100 overflow-y-auto lg:overflow-hidden">
       {/* Header */}
-      <div className="px-8 py-5 border-b border-zinc-800 bg-zinc-950 flex items-center justify-between shrink-0">
+      <div className="px-4 sm:px-8 py-4 sm:py-5 border-b border-zinc-800 bg-zinc-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
         <div>
-          <h1 className="text-xl font-extrabold text-white flex items-center gap-2">
+          <h1 className="text-lg sm:text-xl font-extrabold text-white flex items-center gap-2">
             <Map className="w-5 h-5 text-amber-500" />
             Live Dispatch Tracking
           </h1>
-          <p className="text-xs text-zinc-400">Monitor vehicle telemetry coordinates and real-time waypoint completion.</p>
+          <p className="text-xs text-zinc-400 mt-0.5">Monitor vehicle telemetry coordinates and real-time waypoint completion.</p>
         </div>
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap">
           <button
             id="btn-live-map-toggle-simulation"
             onClick={handleStartSimulation}
-            className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition cursor-pointer ${
+            className={`flex items-center gap-2 px-3.5 py-2 text-xs font-bold rounded-xl transition cursor-pointer ${
               isSimulating 
                 ? 'bg-zinc-800 hover:bg-zinc-700 text-amber-400 border border-amber-500/20' 
                 : 'bg-amber-500 hover:bg-amber-400 text-zinc-950'
@@ -282,13 +282,13 @@ export default function LiveMapPage() {
       </div>
 
       {/* Workspace Split */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row min-h-0 overflow-y-auto lg:overflow-hidden">
         {/* Left Side: Status Pane */}
-        <div className="w-full lg:w-80 flex flex-col border-r border-zinc-800 bg-zinc-950/20 shrink-0 p-6 space-y-6 overflow-y-auto">
+        <div className="w-full lg:w-80 flex flex-col border-b lg:border-b-0 lg:border-r border-zinc-800 bg-zinc-950/20 shrink-0 p-4 sm:p-6 space-y-6 overflow-y-auto">
           <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Active Fleet Positions</label>
           
           {simulatedDrivers.length === 0 ? (
-            <div className="flex-1 border border-dashed border-zinc-800 rounded-xl flex flex-col items-center justify-center p-6 text-center text-xs">
+            <div className="flex-1 border border-dashed border-zinc-800 rounded-xl flex flex-col items-center justify-center p-6 text-center text-xs min-h-[140px]">
               <Compass className="w-8 h-8 text-zinc-700 mb-3 animate-spin" style={{ animationDuration: '6s' }} />
               <p className="text-zinc-400 font-bold">No Active Telemetry</p>
               <p className="text-zinc-500 mt-1 max-w-[200px]">Click "Simulate Live Dispatch" to start real-time vehicle coordinate updates.</p>
@@ -344,7 +344,7 @@ export default function LiveMapPage() {
         </div>
 
         {/* Right Side: Map Canvas */}
-        <div className="flex-1 relative">
+        <div className="flex-1 flex flex-col min-h-[400px] lg:min-h-0 relative">
           <MapComponent
             center={[6.5244, 3.3792]} // Lagos
             zoom={12}

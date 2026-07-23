@@ -304,20 +304,20 @@ export default function OptimizerPage() {
   })) || [];
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-zinc-900 text-zinc-100 overflow-hidden">
+    <div className="flex-1 flex flex-col min-h-full lg:h-full bg-zinc-900 text-zinc-100 overflow-y-auto lg:overflow-hidden">
       {/* Navbar/Header */}
-      <div className="px-8 py-5 border-b border-zinc-800 bg-zinc-950 flex items-center justify-between shrink-0">
+      <div className="px-4 sm:px-8 py-4 sm:py-5 border-b border-zinc-800 bg-zinc-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
         <div>
-          <h1 className="text-xl font-extrabold text-white flex items-center gap-2">
+          <h1 className="text-lg sm:text-xl font-extrabold text-white flex items-center gap-2">
             <Layers className="w-5 h-5 text-emerald-400" />
             Route Planning Optimizer
           </h1>
-          <p className="text-xs text-zinc-400">Add delivery targets, custom overlays, and execute the CVRP optimizer solver.</p>
+          <p className="text-xs text-zinc-400 mt-0.5">Add delivery targets, custom overlays, and execute the CVRP optimizer solver.</p>
         </div>
         <button 
           id="btn-optimizer-load-demo"
           onClick={loadLagosDemoScenario}
-          className="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg border border-zinc-700 transition"
+          className="self-start sm:self-auto flex items-center gap-2 px-3 py-1.5 text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg border border-zinc-700 transition"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           <span>Load Lagos Demo</span>
@@ -325,9 +325,9 @@ export default function OptimizerPage() {
       </div>
 
       {/* Main Workspace split screen */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row min-h-0 overflow-y-auto lg:overflow-hidden">
         {/* Left Config Panel */}
-        <div className="w-full lg:w-96 flex flex-col border-r border-zinc-800 bg-zinc-950/20 overflow-y-auto shrink-0 p-6 space-y-6">
+        <div className="w-full lg:w-96 flex flex-col border-b lg:border-b-0 lg:border-r border-zinc-800 bg-zinc-950/20 overflow-y-auto shrink-0 p-4 sm:p-6 space-y-6">
           {/* Controls: Click Mode selection */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Map Click Mode</label>
@@ -505,7 +505,7 @@ export default function OptimizerPage() {
         </div>
 
         {/* Right Map Panel & Routing results */}
-        <div className="flex-1 flex flex-col overflow-hidden relative">
+        <div className="flex-1 flex flex-col min-h-[400px] lg:min-h-0 overflow-hidden relative">
           {/* Map canvas */}
           <div className="flex-1 relative">
             <MapComponent

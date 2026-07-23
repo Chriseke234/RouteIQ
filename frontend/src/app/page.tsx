@@ -68,18 +68,18 @@ export default function Dashboard() {
   const totalCapacityKg = vehicles.reduce((sum, v) => sum + v.capacity_kg, 0);
 
   return (
-    <div className="flex-1 p-8 space-y-8 bg-zinc-900 text-zinc-100 overflow-y-auto">
+    <div className="flex-1 p-4 sm:p-6 md:p-8 space-y-6 md:space-y-8 bg-zinc-900 text-zinc-100 overflow-y-auto">
       {/* Upper Header section */}
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">Lagos Operations Command</h1>
-          <p className="text-sm text-zinc-400">Real-time status of fleet dispatch, route optimization, and operational efficiency.</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Lagos Operations Command</h1>
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">Real-time status of fleet dispatch, route optimization, and operational efficiency.</p>
         </div>
         <div className="flex items-center gap-3">
           <Link 
             id="link-optimize-new-route"
             href="/optimizer"
-            className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-xl transition shadow-lg shadow-emerald-500/10 cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-xl transition shadow-lg shadow-emerald-500/10 cursor-pointer"
           >
             <Plus className="w-4 h-4 font-bold" />
             <span>Optimize New Route</span>
@@ -88,18 +88,18 @@ export default function Dashboard() {
       </div>
 
       {/* Analytics KPI row */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {/* Vehicles card */}
-        <div className="p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
+        <div className="p-5 sm:p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Vehicles</span>
+            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Vehicles</span>
             <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-emerald-400">
               <Truck className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{activeVehicles}</span>
-            <span className="text-sm text-zinc-500">/ {vehicles.length} active</span>
+            <span className="text-2xl sm:text-3xl font-extrabold text-white">{activeVehicles}</span>
+            <span className="text-xs sm:text-sm text-zinc-500">/ {vehicles.length} active</span>
           </div>
           <div className="mt-2 text-xs text-zinc-400 flex items-center gap-1.5">
             <span className="font-semibold text-emerald-400">{totalCapacityKg.toLocaleString()} kg</span> total load capacity.
@@ -107,16 +107,16 @@ export default function Dashboard() {
         </div>
 
         {/* Dispatch Trips card */}
-        <div className="p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
+        <div className="p-5 sm:p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Active Trips</span>
+            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Active Trips</span>
             <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-sky-400">
               <Navigation className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{activeTripsCount}</span>
-            <span className="text-sm text-zinc-500">assigned</span>
+            <span className="text-2xl sm:text-3xl font-extrabold text-white">{activeTripsCount}</span>
+            <span className="text-xs sm:text-sm text-zinc-500">assigned</span>
           </div>
           <div className="mt-2 text-xs text-zinc-400 flex items-center gap-1.5">
             <span className="font-semibold text-sky-400">{completedTripsCount}</span> routes completed this week.
@@ -124,15 +124,15 @@ export default function Dashboard() {
         </div>
 
         {/* Fuel Expense card */}
-        <div className="p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
+        <div className="p-5 sm:p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Fuel Cost</span>
+            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Fuel Cost</span>
             <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-amber-400">
               <Fuel className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">₦{(totalFuelCostNGN).toLocaleString()}</span>
+            <span className="text-2xl sm:text-3xl font-extrabold text-white">₦{(totalFuelCostNGN).toLocaleString()}</span>
           </div>
           <div className="mt-2 text-xs text-zinc-400 flex items-center gap-1.5">
             Avg: <span className="font-semibold text-amber-400">₦{averageFuelPrice}/L</span> over {totalFuelLiters.toLocaleString()} Liters.
@@ -140,16 +140,16 @@ export default function Dashboard() {
         </div>
 
         {/* Drivers card */}
-        <div className="p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
+        <div className="p-5 sm:p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Staffing</span>
+            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Staffing</span>
             <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-violet-400">
               <Users className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{drivers.length}</span>
-            <span className="text-sm text-zinc-500">drivers registered</span>
+            <span className="text-2xl sm:text-3xl font-extrabold text-white">{drivers.length}</span>
+            <span className="text-xs sm:text-sm text-zinc-500">drivers registered</span>
           </div>
           <div className="mt-2 text-xs text-zinc-400 flex items-center gap-1.5">
             <span className="font-semibold text-violet-400">{drivers.filter(d => d.vehicle_id).length}</span> drivers assigned to vehicles.
@@ -158,13 +158,13 @@ export default function Dashboard() {
       </div>
 
       {/* Main Grid Content */}
-      <div className="grid gap-8 lg:grid-cols-3">
+      <div className="grid gap-6 md:gap-8 lg:grid-cols-3">
         {/* Left Column: Active Trips */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="p-6 bg-zinc-950/30 border border-zinc-800 rounded-2xl">
-            <div className="flex items-center justify-between mb-6">
+          <div className="p-4 sm:p-6 bg-zinc-950/30 border border-zinc-800 rounded-2xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
               <div>
-                <h3 className="text-lg font-bold text-white">Active Dispatch Routes</h3>
+                <h3 className="text-base sm:text-lg font-bold text-white">Active Dispatch Routes</h3>
                 <p className="text-xs text-zinc-400">Currently active VRP optimized assignments.</p>
               </div>
               <Link id="link-dashboard-live-tracking" href="/live-map" className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1">
@@ -187,61 +187,108 @@ export default function Dashboard() {
                 </Link>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-zinc-800 text-xs font-semibold text-zinc-400">
-                      <th className="pb-3">Trip ID</th>
-                      <th className="pb-3">Driver</th>
-                      <th className="pb-3">Stops</th>
-                      <th className="pb-3">Status</th>
-                      <th className="pb-3">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-zinc-800/50 text-sm">
-                    {trips.map((trip) => {
-                      const pendingWps = trip.waypoints?.filter(w => w.status === 'pending').length || 0;
-                      const totalWps = trip.waypoints?.length || 0;
+              <div>
+                {/* Desktop Table View (>=md) */}
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-zinc-800 text-xs font-semibold text-zinc-400">
+                        <th className="pb-3">Trip ID</th>
+                        <th className="pb-3">Driver</th>
+                        <th className="pb-3">Stops</th>
+                        <th className="pb-3">Status</th>
+                        <th className="pb-3">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-800/50 text-sm">
+                      {trips.map((trip) => {
+                        const pendingWps = trip.waypoints?.filter(w => w.status === 'pending').length || 0;
+                        const totalWps = trip.waypoints?.length || 0;
 
-                      return (
-                        <tr key={trip.id} className="hover:bg-zinc-900/20">
-                          <td className="py-4 font-mono text-xs text-zinc-400">#{trip.id.substring(0, 8)}</td>
-                          <td className="py-4">
+                        return (
+                          <tr key={trip.id} className="hover:bg-zinc-900/20">
+                            <td className="py-4 font-mono text-xs text-zinc-400">#{trip.id.substring(0, 8)}</td>
+                            <td className="py-4">
+                              <span className="font-semibold text-zinc-200">{trip.driver_name || 'Unassigned'}</span>
+                            </td>
+                            <td className="py-4">
+                              <span className="text-zinc-300 font-medium">
+                                {totalWps - pendingWps} / {totalWps} visited
+                              </span>
+                            </td>
+                            <td className="py-4">
+                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+                                trip.status === 'active' 
+                                  ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                                  : trip.status === 'completed'
+                                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                                  : 'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20'
+                              }`}>
+                                {trip.status === 'active' && <Clock className="w-3 h-3" />}
+                                {trip.status === 'completed' && <CheckCircle2 className="w-3 h-3" />}
+                                {trip.status === 'assigned' && <AlertCircle className="w-3 h-3" />}
+                                <span className="capitalize">{trip.status}</span>
+                              </span>
+                            </td>
+                            <td className="py-4">
+                              <Link 
+                                id={`link-simulate-trip-${trip.id}`}
+                                href="/driver" 
+                                className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition"
+                              >
+                                Simulate
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile Cards View (<md) */}
+                <div className="md:hidden space-y-3">
+                  {trips.map((trip) => {
+                    const pendingWps = trip.waypoints?.filter(w => w.status === 'pending').length || 0;
+                    const totalWps = trip.waypoints?.length || 0;
+
+                    return (
+                      <div key={trip.id} className="p-4 bg-zinc-900/60 border border-zinc-800 rounded-xl space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-xs text-zinc-400">#{trip.id.substring(0, 8)}</span>
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium ${
+                            trip.status === 'active' 
+                              ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                              : trip.status === 'completed'
+                              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                              : 'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20'
+                          }`}>
+                            <span className="capitalize">{trip.status}</span>
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <div>
+                            <span className="text-zinc-500 block text-[10px]">Driver</span>
                             <span className="font-semibold text-zinc-200">{trip.driver_name || 'Unassigned'}</span>
-                          </td>
-                          <td className="py-4">
-                            <span className="text-zinc-300 font-medium">
-                              {totalWps - pendingWps} / {totalWps} visited
-                            </span>
-                          </td>
-                          <td className="py-4">
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
-                              trip.status === 'active' 
-                                ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                                : trip.status === 'completed'
-                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                                : 'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20'
-                            }`}>
-                              {trip.status === 'active' && <Clock className="w-3 h-3" />}
-                              {trip.status === 'completed' && <CheckCircle2 className="w-3 h-3" />}
-                              {trip.status === 'assigned' && <AlertCircle className="w-3 h-3" />}
-                              <span className="capitalize">{trip.status}</span>
-                            </span>
-                          </td>
-                          <td className="py-4">
-                            <Link 
-                              id={`link-simulate-trip-${trip.id}`}
-                              href="/driver" 
-                              className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition"
-                            >
-                              Simulate
-                            </Link>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-zinc-500 block text-[10px]">Progress</span>
+                            <span className="text-zinc-300 font-medium">{totalWps - pendingWps} / {totalWps} visited</span>
+                          </div>
+                        </div>
+                        <div className="pt-2 border-t border-zinc-800/60 flex justify-end">
+                          <Link 
+                            id={`link-simulate-trip-mobile-${trip.id}`}
+                            href="/driver" 
+                            className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition"
+                          >
+                            Simulate Route →
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

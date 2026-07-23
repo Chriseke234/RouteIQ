@@ -1,0 +1,13 @@
+# Ignore backend files in frontend deployment
+backend/
+
+# Ignore local configuration and log files
+*.log
+.env.local
+.env.*.local
+
+# Ignore IDE settings
+.vscode/
+.idea/
+.git/
+.github/

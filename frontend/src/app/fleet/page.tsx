@@ -128,20 +128,20 @@ export default function FleetPage() {
   }
 
   return (
-    <div className="flex-1 p-8 space-y-8 bg-zinc-900 text-zinc-100 overflow-y-auto">
-      {/* Header Section */}
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+    <div className="flex-1 p-4 sm:p-6 md:p-8 space-y-6 md:space-y-8 bg-zinc-900 text-zinc-100 overflow-y-auto">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">Fleet Management</h1>
-          <p className="text-sm text-zinc-400">Register trucks, add drivers, and configure asset allocation.</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Fleet & Driver Management</h1>
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">Register vehicles, update load capacities, and manage driver credentials.</p>
         </div>
         
-        {/* Tab Controls */}
-        <div className="flex items-center bg-zinc-950 p-1.5 rounded-xl border border-zinc-800 shrink-0">
+        {/* Tabs switcher */}
+        <div className="flex items-center gap-1 p-1 bg-zinc-950 border border-zinc-800 rounded-xl self-start sm:self-auto">
           <button
             id="btn-fleet-tab-vehicles"
             onClick={() => setActiveTab('vehicles')}
-            className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg transition ${
+            className={`flex items-center gap-2 px-3.5 py-2 text-xs font-bold rounded-lg transition ${
               activeTab === 'vehicles'
                 ? 'bg-zinc-900 text-white'
                 : 'text-zinc-500 hover:text-zinc-300'
@@ -153,7 +153,7 @@ export default function FleetPage() {
           <button
             id="btn-fleet-tab-drivers"
             onClick={() => setActiveTab('drivers')}
-            className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg transition ${
+            className={`flex items-center gap-2 px-3.5 py-2 text-xs font-bold rounded-lg transition ${
               activeTab === 'drivers'
                 ? 'bg-zinc-900 text-white'
                 : 'text-zinc-500 hover:text-zinc-300'
@@ -169,7 +169,7 @@ export default function FleetPage() {
         // --- VEHICLES TAB ---
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-bold text-white">Registered Trucks</h3>
+            <h3 className="text-base sm:text-lg font-bold text-white">Registered Trucks</h3>
             <button
               id="btn-fleet-toggle-vehicle-form"
               onClick={() => setShowVehicleForm(!showVehicleForm)}
@@ -182,7 +182,7 @@ export default function FleetPage() {
 
           {/* New Vehicle Form */}
           {showVehicleForm && (
-            <form onSubmit={handleAddVehicle} className="p-6 bg-zinc-950/60 border border-zinc-800 rounded-2xl grid gap-4 sm:grid-cols-4 items-end max-w-4xl">
+            <form onSubmit={handleAddVehicle} className="p-4 sm:p-6 bg-zinc-950/60 border border-zinc-800 rounded-2xl grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-end max-w-4xl">
               <div>
                 <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Plate Number</label>
                 <input 
@@ -234,9 +234,10 @@ export default function FleetPage() {
             </form>
           )}
 
-          {/* Vehicles List Table */}
-          <div className="bg-zinc-950/30 border border-zinc-800 rounded-2xl overflow-hidden">
-            <div className="overflow-x-auto">
+          {/* Vehicles Container (Table + Mobile Cards) */}
+          <div className="bg-zinc-950/30 border border-zinc-800 rounded-2xl overflow-hidden p-3 sm:p-0">
+            {/* Desktop Table View (>=md) */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-zinc-800 text-xs font-semibold text-zinc-400">
@@ -290,6 +291,55 @@ export default function FleetPage() {
                 </tbody>
               </table>
             </div>
+
+            {/* Mobile Cards View (<md) */}
+            <div className="md:hidden space-y-3">
+              {vehicles.map((v) => (
+                <div key={v.id} className="p-4 bg-zinc-900/70 border border-zinc-800 rounded-xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                        <Truck className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <span className="font-extrabold text-zinc-200 font-mono block text-sm">{v.plate_number}</span>
+                        <span className="text-xs text-zinc-400">{v.model}</span>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleDeleteVehicle(v.id)}
+                      className="p-2 text-zinc-500 hover:text-red-400 transition"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between pt-2 border-t border-zinc-800 text-xs">
+                    <div>
+                      <span className="text-zinc-500 block text-[10px]">Capacity</span>
+                      <span className="font-medium text-zinc-300">{v.capacity_kg.toLocaleString()} kg</span>
+                    </div>
+                    <div>
+                      <span className="text-zinc-500 block text-[10px] mb-1">Status</span>
+                      <select
+                        value={v.status}
+                        onChange={(e) => updateVehicleStatus(v.id, e.target.value as any)}
+                        className={`text-xs font-semibold px-2 py-1 rounded-lg border bg-zinc-950 focus:outline-none ${
+                          v.status === 'active' 
+                            ? 'text-emerald-400 border-emerald-500/20'
+                            : v.status === 'maintenance'
+                            ? 'text-amber-400 border-amber-500/20'
+                            : 'text-zinc-500 border-zinc-800'
+                        }`}
+                      >
+                        <option value="active">Active</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="offline">Offline</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ) : (
@@ -309,7 +359,7 @@ export default function FleetPage() {
 
           {/* New Driver Form */}
           {showDriverForm && (
-            <form onSubmit={handleAddDriver} className="p-6 bg-zinc-950/60 border border-zinc-800 rounded-2xl grid gap-4 sm:grid-cols-4 items-end max-w-4xl">
+            <form onSubmit={handleAddDriver} className="p-4 sm:p-6 bg-zinc-950/60 border border-zinc-800 rounded-2xl grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-end max-w-4xl">
               <div>
                 <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Full Name</label>
                 <input 
@@ -356,7 +406,7 @@ export default function FleetPage() {
                   ))}
                 </select>
               </div>
-              <div className="flex gap-2 sm:col-span-4 justify-end">
+              <div className="flex gap-2 sm:col-span-2 lg:col-span-4 justify-end">
                 <button 
                   type="submit"
                   className="px-6 py-2.5 text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-lg transition"
@@ -374,9 +424,10 @@ export default function FleetPage() {
             </form>
           )}
 
-          {/* Drivers List Table */}
-          <div className="bg-zinc-950/30 border border-zinc-800 rounded-2xl overflow-hidden">
-            <div className="overflow-x-auto">
+          {/* Drivers List Container (Table + Mobile Cards) */}
+          <div className="bg-zinc-950/30 border border-zinc-800 rounded-2xl overflow-hidden p-3 sm:p-0">
+            {/* Desktop Table View (>=md) */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-zinc-800 text-xs font-semibold text-zinc-400">
@@ -425,6 +476,51 @@ export default function FleetPage() {
                   })}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards View (<md) */}
+            <div className="md:hidden space-y-3">
+              {drivers.map((d) => {
+                const vehicle = vehicles.find(v => v.id === d.vehicle_id);
+
+                return (
+                  <div key={d.id} className="p-4 bg-zinc-900/70 border border-zinc-800 rounded-xl space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <UserSquare2 className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <span className="font-bold text-zinc-200 block text-sm">{d.full_name}</span>
+                          <span className="text-xs text-zinc-400 font-mono">{d.license_number}</span>
+                        </div>
+                      </div>
+                      <button 
+                        onClick={() => handleDeleteDriver(d.id)}
+                        className="p-2 text-zinc-500 hover:text-red-400 transition"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div className="flex items-center justify-between pt-2 border-t border-zinc-800 text-xs">
+                      <div>
+                        <span className="text-zinc-500 block text-[10px]">Contact</span>
+                        <span className="font-medium text-zinc-300">{d.phone}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-zinc-500 block text-[10px] mb-1">Vehicle</span>
+                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md border ${
+                          vehicle 
+                            ? 'bg-zinc-950 border-zinc-800 text-zinc-300 font-mono'
+                            : 'bg-zinc-950/20 border-zinc-800 text-zinc-600'
+                        }`}>
+                          {vehicle ? vehicle.plate_number : 'Unassigned'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

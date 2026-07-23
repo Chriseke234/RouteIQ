@@ -117,10 +117,10 @@ export default function DriverPortalPage() {
   const currentDriver = drivers.find(d => d.id === selectedDriverId);
 
   return (
-    <div className="flex-1 flex flex-col md:flex-row items-center justify-center p-8 bg-zinc-900 overflow-y-auto">
+    <div className="flex-1 flex flex-col items-center justify-center p-3 sm:p-6 md:p-8 bg-zinc-900 overflow-y-auto">
       <h1 className="sr-only">Driver Simulation Portal</h1>
       {/* Mobile viewport frame simulation container */}
-      <div className="w-full max-w-sm h-[750px] bg-zinc-950 border border-zinc-800 rounded-[40px] shadow-2xl flex flex-col overflow-hidden relative border-4 border-zinc-800">
+      <div className="w-full max-w-sm h-[calc(100vh-6rem)] min-h-[550px] sm:h-[750px] max-h-[780px] bg-zinc-950 border border-zinc-800 rounded-[28px] sm:rounded-[40px] shadow-2xl flex flex-col overflow-hidden relative border-4 border-zinc-800">
         
         {/* Speaker notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-zinc-800 rounded-full z-20" />

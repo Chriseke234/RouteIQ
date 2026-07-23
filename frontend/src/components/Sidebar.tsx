@@ -40,7 +40,7 @@ export default function Sidebar({ className = '' }: SidebarProps) {
   ];
 
   return (
-    <aside className={`flex flex-col w-64 bg-zinc-950 text-zinc-100 border-r border-zinc-800 shrink-0 h-screen sticky top-0 ${className}`}>
+    <aside className={`hidden md:flex flex-col w-64 bg-zinc-950 text-zinc-100 border-r border-zinc-800 shrink-0 h-screen sticky top-0 ${className}`}>
       {/* Brand Header */}
       <div className="flex items-center gap-3 px-6 py-5 border-b border-zinc-800">
         <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 shadow-lg shadow-teal-500/20">
