@@ -12,7 +12,10 @@ import {
   Clock, 
   AlertCircle,
   TrendingUp,
-  Map
+  Map,
+  UserSquare2,
+  Phone,
+  ArrowRight
 } from 'lucide-react';
 import { fleetService, Vehicle, Driver, Trip, FuelLog } from '@/utils/fleetService';
 
@@ -291,6 +294,52 @@ export default function Dashboard() {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Registered Fleet Drivers Roster */}
+          <div className="p-4 sm:p-6 bg-zinc-950/30 border border-zinc-800 rounded-2xl space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                  <UserSquare2 className="w-5 h-5 text-violet-400" />
+                  Fleet Drivers Roster
+                </h3>
+                <p className="text-xs text-zinc-400">Active drivers, license numbers, and assigned vehicle plates.</p>
+              </div>
+              <Link href="/driver" className="text-xs font-semibold text-violet-400 hover:text-violet-300 flex items-center gap-1">
+                <span>Driver Portal</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+              {drivers.map((d) => {
+                const vehicle = vehicles.find(v => v.id === d.vehicle_id);
+                return (
+                  <div key={d.id} className="p-3.5 bg-zinc-900/60 border border-zinc-800/80 rounded-xl flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 font-bold text-xs flex items-center justify-center shrink-0">
+                        {d.full_name.slice(0, 2).toUpperCase()}
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold text-zinc-200">{d.full_name}</h4>
+                        <span className="text-[10px] text-zinc-400 font-mono block">{d.license_number}</span>
+                      </div>
+                    </div>
+
+                    <div className="text-right">
+                      <span className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border font-mono ${
+                        vehicle 
+                          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                          : 'bg-zinc-800 text-zinc-500 border-zinc-700'
+                      }`}>
+                        {vehicle ? vehicle.plate_number : 'Unassigned'}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
