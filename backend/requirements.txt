@@ -1,0 +1,17 @@
+fastapi==0.111.0
+uvicorn==0.30.1
+sqlalchemy[asyncio]==2.0.31
+asyncpg==0.29.0
+geoalchemy2==0.15.1
+redis==5.0.7
+celery==5.4.0
+ortools>=9.12.0
+pydantic==2.7.4
+pydantic-settings==2.3.4
+pyjwt[crypto]==2.8.0
+passlib[bcrypt]==1.7.4
+pytest==8.2.2
+pytest-asyncio==0.23.7
+httpx==0.27.0
+shapely==2.0.4
+protobuf==5.27.2

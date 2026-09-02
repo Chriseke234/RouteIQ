@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: routeiq_db
+    environment:
+      POSTGRES_USER: routeiq_user
+      POSTGRES_PASSWORD: routeiq_password
+      POSTGRES_DB: routeiq_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U routeiq_user -d routeiq_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: routeiq_redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  osrm:
+    image: osrm/osrm-backend:latest
+    container_name: routeiq_osrm
+    volumes:
+      - osrmdata:/data
+    ports:
+      - "5000:5000"
+    entrypoint: >
+      /bin/sh -c "
+      if [ ! -f /data/lagos-latest.osrm ]; then
+        echo 'Downloading Lagos map data...';
+        curl -L http://download.geofabrik.de/africa/nigeria-latest.osm.pbf -o /data/nigeria-latest.osm.pbf;
+        echo 'Extracting map data...';
+        osrm-extract -p /usr/local/share/osrm/profiles/car.lua /data/nigeria-latest.osm.pbf;
+        echo 'Partitioning map data...';
+        osrm-partition /data/nigeria-latest.osrm;
+        echo 'Customizing map data...';
+        osrm-customize /data/nigeria-latest.osrm;
+      fi;
+      echo 'Starting OSRM Routed Server...';
+      osrm-routed --algorithm mld /data/nigeria-latest.osrm --port 5000
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/route/v1/driving/3.37,6.45;3.38,6.46"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: routeiq_web
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/workspace
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://routeiq_user:routeiq_password@db:5432/routeiq_dev
+      - REDIS_URL=redis://redis:6379/0
+      - OSRM_URL=http://osrm:5000
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - JWT_SECRET=super_secret_jwt_key_routeiq_2026
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      osrm:
+        condition: service_started
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: routeiq_worker
+    command: celery -A app.worker.celery_app worker --loglevel=info
+    volumes:
+      - .:/workspace
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://routeiq_user:routeiq_password@db:5432/routeiq_dev
+      - REDIS_URL=redis://redis:6379/0
+      - OSRM_URL=http://osrm:5000
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      osrm:
+        condition: service_started
+
+volumes:
+  pgdata:
+  osrmdata:
