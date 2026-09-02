@@ -78,9 +78,12 @@ const DEFAULT_VEHICLES: Vehicle[] = [
 ];
 
 const DEFAULT_DRIVERS: Driver[] = [
-  { id: 'd-1', full_name: 'Babajide Okafor', phone: '+234 803 111 2222', license_number: 'LA-99281-A', vehicle_id: 'v-1' },
-  { id: 'd-2', full_name: 'Chinedu Musa', phone: '+234 812 333 4444', license_number: 'AB-88412-B', vehicle_id: 'v-2' },
-  { id: 'd-3', full_name: 'Tunde Balogun', phone: '+234 905 555 6666', license_number: 'KD-23091-C', vehicle_id: 'v-3' },
+  { id: 'd-1', full_name: 'Babajide Okafor', phone: '+234 803 111 2222', license_number: 'LA-99281-A', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
+  { id: 'd-2', full_name: 'Chinedu Musa', phone: '+234 812 333 4444', license_number: 'AB-88412-B', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
+  { id: 'd-3', full_name: 'Tunde Balogun', phone: '+234 905 555 6666', license_number: 'KD-23091-C', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB' },
+  { id: 'd-4', full_name: 'Amina Abubakar', phone: '+234 802 777 8888', license_number: 'KN-54109-D', vehicle_id: 'v-4', vehicle_plate: 'PHC-552-LK' },
+  { id: 'd-5', full_name: 'Emeka Nnamdi', phone: '+234 814 999 0000', license_number: 'EN-77312-E', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
+  { id: 'd-6', full_name: 'Olufemi Adebayo', phone: '+234 701 444 5555', license_number: 'OG-33190-F', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
 ];
 
 // Helper to load/save localStorage
@@ -370,8 +373,9 @@ export const fleetService = {
       }
     }
     return getLocalStorageItem<FuelLog[]>('routeiq_fuel_logs', [
-      { id: 'flog-1', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA', driver_id: 'd-1', driver_name: 'Babajide Okafor', amount_liters: 45, cost_ngn: 29250, timestamp: new Date(Date.now() - 3600000 * 24).toISOString() },
-      { id: 'flog-2', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY', driver_id: 'd-2', driver_name: 'Chinedu Musa', amount_liters: 60, cost_ngn: 39000, timestamp: new Date(Date.now() - 3600000 * 12).toISOString() },
+      { id: 'flog-1', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA', driver_id: 'd-1', driver_name: 'Babajide Okafor', amount_liters: 45, cost_ngn: 58500, timestamp: new Date(Date.now() - 3600000 * 24).toISOString() },
+      { id: 'flog-2', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY', driver_id: 'd-2', driver_name: 'Chinedu Musa', amount_liters: 60, cost_ngn: 78000, timestamp: new Date(Date.now() - 3600000 * 12).toISOString() },
+      { id: 'flog-3', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB', driver_id: 'd-3', driver_name: 'Tunde Balogun', amount_liters: 50, cost_ngn: 65000, timestamp: new Date(Date.now() - 3600000 * 4).toISOString() },
     ]);
   },
 

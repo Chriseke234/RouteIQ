@@ -443,13 +443,19 @@ export default function DriverPortalPage() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Fuel Purchased (Liters)</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
+                  Fuel Purchased (Liters) <span className="text-[10px] text-amber-400 font-normal">(@ ₦1,300 / Liter)</span>
+                </label>
                 <input 
                   id="input-driver-sim-fuel-liters"
                   type="number" 
                   required
                   value={liters || ''}
-                  onChange={(e) => setLiters(Number(e.target.value))}
+                  onChange={(e) => {
+                    const l = Number(e.target.value);
+                    setLiters(l);
+                    setCostNgn(l * 1300);
+                  }}
                   placeholder="e.g. 50"
                   className="w-full bg-zinc-900 border border-zinc-800 text-sm px-4 py-3 rounded-xl text-zinc-100 focus:outline-none focus:border-emerald-500 transition"
                 />
@@ -463,7 +469,7 @@ export default function DriverPortalPage() {
                   required
                   value={costNgn || ''}
                   onChange={(e) => setCostNgn(Number(e.target.value))}
-                  placeholder="e.g. 32500"
+                  placeholder="e.g. 65000"
                   className="w-full bg-zinc-900 border border-zinc-800 text-sm px-4 py-3 rounded-xl text-zinc-100 focus:outline-none focus:border-emerald-500 transition"
                 />
               </div>
