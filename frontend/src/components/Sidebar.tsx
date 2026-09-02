@@ -12,17 +12,6 @@ import {
   Layers,
   ChevronRight
 } from 'lucide-react';
-import { OPTIMIZER_API_URL } from '@/utils/supabase';
-
-const getOptimizerHost = (url: string) => {
-  try {
-    const parsed = new URL(url);
-    return parsed.host;
-  } catch (e) {
-    return url.replace(/^https?:\/\//, '');
-  }
-};
-
 
 interface SidebarProps {
   className?: string;
@@ -79,17 +68,6 @@ export default function Sidebar({ className = '' }: SidebarProps) {
           );
         })}
       </nav>
-
-      {/* Footer Info */}
-      <div className="p-4 border-t border-zinc-800 bg-zinc-950">
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-zinc-900/50 border border-zinc-800">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <div className="flex flex-col">
-            <span className="text-xs font-semibold text-zinc-300">FastAPI Solver</span>
-            <span className="text-[10px] text-zinc-500">Connected to {getOptimizerHost(OPTIMIZER_API_URL)}</span>
-          </div>
-        </div>
-      </div>
     </aside>
   );
 }
