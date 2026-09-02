@@ -86,6 +86,51 @@ const DEFAULT_DRIVERS: Driver[] = [
   { id: 'd-6', full_name: 'Olufemi Adebayo', phone: '+234 701 444 5555', license_number: 'OG-33190-F', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
 ];
 
+const DEFAULT_TRIPS: Trip[] = [
+  {
+    id: 'trp-001',
+    driver_id: 'd-1',
+    driver_name: 'Babajide Okafor',
+    vehicle_plate: 'LAG-492-AA',
+    status: 'active',
+    waypoints: [
+      { id: 'wp-101', trip_id: 'trp-001', sequence: 0, name: 'Ikeja Distribution Depot', latitude: 6.6018, longitude: 3.3515, status: 'visited' },
+      { id: 'wp-102', trip_id: 'trp-001', sequence: 1, name: 'Oregun Commercial Center', latitude: 6.6110, longitude: 3.3650, status: 'visited' },
+      { id: 'wp-103', trip_id: 'trp-001', sequence: 2, name: 'Allen Avenue Supermarket', latitude: 6.5980, longitude: 3.3580, status: 'pending' },
+      { id: 'wp-104', trip_id: 'trp-001', sequence: 3, name: 'Victoria Island Terminal', latitude: 6.4281, longitude: 3.4219, status: 'pending' },
+    ]
+  },
+  {
+    id: 'trp-002',
+    driver_id: 'd-2',
+    driver_name: 'Chinedu Musa',
+    vehicle_plate: 'ABJ-881-XY',
+    status: 'assigned',
+    waypoints: [
+      { id: 'wp-201', trip_id: 'trp-002', sequence: 0, name: 'Apapa Port Logistics Hub', latitude: 6.4474, longitude: 3.3585, status: 'pending' },
+      { id: 'wp-202', trip_id: 'trp-002', sequence: 1, name: 'Surulere Retail Warehouse', latitude: 6.4969, longitude: 3.3542, status: 'pending' },
+      { id: 'wp-203', trip_id: 'trp-002', sequence: 2, name: 'Yaba Tech Depot', latitude: 6.5186, longitude: 3.3712, status: 'pending' },
+    ]
+  },
+  {
+    id: 'trp-003',
+    driver_id: 'd-3',
+    driver_name: 'Tunde Balogun',
+    vehicle_plate: 'KND-104-BB',
+    status: 'completed',
+    waypoints: [
+      { id: 'wp-301', trip_id: 'trp-003', sequence: 0, name: 'Lekki Phase 1 Fulfillment', latitude: 6.4478, longitude: 3.4723, status: 'visited' },
+      { id: 'wp-302', trip_id: 'trp-003', sequence: 1, name: 'Ajah Express Hub', latitude: 6.4698, longitude: 3.5670, status: 'visited' },
+    ]
+  }
+];
+
+const DEFAULT_FUEL_LOGS: FuelLog[] = [
+  { id: 'flog-1', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA', driver_id: 'd-1', driver_name: 'Babajide Okafor', amount_liters: 45, cost_ngn: 58500, timestamp: new Date(Date.now() - 3600000 * 24).toISOString() },
+  { id: 'flog-2', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY', driver_id: 'd-2', driver_name: 'Chinedu Musa', amount_liters: 60, cost_ngn: 78000, timestamp: new Date(Date.now() - 3600000 * 12).toISOString() },
+  { id: 'flog-3', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB', driver_id: 'd-3', driver_name: 'Tunde Balogun', amount_liters: 50, cost_ngn: 65000, timestamp: new Date(Date.now() - 3600000 * 4).toISOString() },
+];
+
 // Helper to load/save localStorage
 const getLocalStorageItem = <T>(key: string, defaultValue: T): T => {
   if (typeof window === 'undefined') return defaultValue;
@@ -108,9 +153,14 @@ export const fleetService = {
   async getVehicles(): Promise<Vehicle[]> {
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase.from('vehicles').select('*');
-      if (!error && data) return data as Vehicle[];
+      if (!error && data && data.length > 0) return data as Vehicle[];
     }
-    return getLocalStorageItem<Vehicle[]>('routeiq_vehicles', DEFAULT_VEHICLES);
+    const local = getLocalStorageItem<Vehicle[]>('routeiq_vehicles', DEFAULT_VEHICLES);
+    if (!local || local.length === 0) {
+      setLocalStorageItem('routeiq_vehicles', DEFAULT_VEHICLES);
+      return DEFAULT_VEHICLES;
+    }
+    return local;
   },
 
   async saveVehicle(vehicle: Omit<Vehicle, 'id'> & { id?: string }): Promise<Vehicle> {
@@ -161,7 +211,7 @@ export const fleetService = {
           vehicle_id,
           profiles (full_name)
         `);
-      if (!error && data) {
+      if (!error && data && data.length > 0) {
         return data.map((d: any) => {
           const profile = Array.isArray(d.profiles) ? d.profiles[0] : d.profiles;
           return {
@@ -174,7 +224,12 @@ export const fleetService = {
         });
       }
     }
-    return getLocalStorageItem<Driver[]>('routeiq_drivers', DEFAULT_DRIVERS);
+    const local = getLocalStorageItem<Driver[]>('routeiq_drivers', DEFAULT_DRIVERS);
+    if (!local || local.length < DEFAULT_DRIVERS.length) {
+      setLocalStorageItem('routeiq_drivers', DEFAULT_DRIVERS);
+      return DEFAULT_DRIVERS;
+    }
+    return local;
   },
 
   async saveDriver(driver: Omit<Driver, 'id'> & { id?: string }): Promise<Driver> {
@@ -229,7 +284,7 @@ export const fleetService = {
           profiles (full_name)
         `);
       
-      if (!tripsError && tripsData) {
+      if (!tripsError && tripsData && tripsData.length > 0) {
         const trips: Trip[] = [];
         for (const t of tripsData) {
           const { data: wpData } = await supabase
@@ -238,11 +293,7 @@ export const fleetService = {
             .eq('trip_id', t.id)
             .order('sequence', { ascending: true });
           
-          // Map PostGIS point geometry ST_AsText or similar
           const waypoints: Waypoint[] = (wpData || []).map((wp: any) => {
-            // Location points are usually returned as geojson/objects in supabase if postgis config is standard,
-            // or we parse standard latitude/longitude from schema.
-            // Let's assume standard float columns or coordinate mapping.
             return {
               id: wp.id,
               trip_id: wp.trip_id,
@@ -267,7 +318,12 @@ export const fleetService = {
         return trips;
       }
     }
-    return getLocalStorageItem<Trip[]>('routeiq_trips', []);
+    const local = getLocalStorageItem<Trip[]>('routeiq_trips', DEFAULT_TRIPS);
+    if (!local || local.length === 0) {
+      setLocalStorageItem('routeiq_trips', DEFAULT_TRIPS);
+      return DEFAULT_TRIPS;
+    }
+    return local;
   },
 
   async saveTrip(trip: Trip): Promise<Trip> {
@@ -355,7 +411,7 @@ export const fleetService = {
           driver_id,
           profiles (full_name)
         `);
-      if (!error && data) {
+      if (!error && data && data.length > 0) {
         return data.map((f: any) => {
           const profile = Array.isArray(f.profiles) ? f.profiles[0] : f.profiles;
           const vehicle = Array.isArray(f.vehicles) ? f.vehicles[0] : f.vehicles;
@@ -372,11 +428,12 @@ export const fleetService = {
         });
       }
     }
-    return getLocalStorageItem<FuelLog[]>('routeiq_fuel_logs', [
-      { id: 'flog-1', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA', driver_id: 'd-1', driver_name: 'Babajide Okafor', amount_liters: 45, cost_ngn: 58500, timestamp: new Date(Date.now() - 3600000 * 24).toISOString() },
-      { id: 'flog-2', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY', driver_id: 'd-2', driver_name: 'Chinedu Musa', amount_liters: 60, cost_ngn: 78000, timestamp: new Date(Date.now() - 3600000 * 12).toISOString() },
-      { id: 'flog-3', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB', driver_id: 'd-3', driver_name: 'Tunde Balogun', amount_liters: 50, cost_ngn: 65000, timestamp: new Date(Date.now() - 3600000 * 4).toISOString() },
-    ]);
+    const local = getLocalStorageItem<FuelLog[]>('routeiq_fuel_logs', DEFAULT_FUEL_LOGS);
+    if (!local || local.length === 0) {
+      setLocalStorageItem('routeiq_fuel_logs', DEFAULT_FUEL_LOGS);
+      return DEFAULT_FUEL_LOGS;
+    }
+    return local;
   },
 
   async addFuelLog(log: Omit<FuelLog, 'id'>): Promise<FuelLog> {
