@@ -91,11 +91,10 @@ export default function MapComponent({
       zoomControl: true,
     });
 
-    // Dark-themed tile layer for premium look (CartoDB Dark Matter)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20,
+    // Dark-themed public tile layer for premium look (Esri World Dark Gray Canvas - No API key required)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; Esri, HERE, Garmin, FAO, NOAA, USGS, OpenStreetMap contributors',
+      maxZoom: 16,
     }).addTo(map);
 
     mapRef.current = map;
