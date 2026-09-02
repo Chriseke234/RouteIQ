@@ -131,15 +131,40 @@ const DEFAULT_FUEL_LOGS: FuelLog[] = [
   { id: 'flog-3', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB', driver_id: 'd-3', driver_name: 'Tunde Balogun', amount_liters: 50, cost_ngn: 65000, timestamp: new Date(Date.now() - 3600000 * 4).toISOString() },
 ];
 
-// Helper to load/save localStorage
+const CURRENT_DATA_VERSION = 'routeiq_v3_2026_09_02';
+
+// Helper to load/save localStorage with automatic cache purging
 const getLocalStorageItem = <T>(key: string, defaultValue: T): T => {
   if (typeof window === 'undefined') return defaultValue;
+  
+  // Invalidate old/stale browser storage caches
+  const version = localStorage.getItem('routeiq_cache_version');
+  if (version !== CURRENT_DATA_VERSION) {
+    localStorage.removeItem('routeiq_drivers');
+    localStorage.removeItem('routeiq_vehicles');
+    localStorage.removeItem('routeiq_trips');
+    localStorage.removeItem('routeiq_fuel_logs');
+    localStorage.setItem('routeiq_cache_version', CURRENT_DATA_VERSION);
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+    return defaultValue;
+  }
+
   const stored = localStorage.getItem(key);
   if (!stored) {
     localStorage.setItem(key, JSON.stringify(defaultValue));
     return defaultValue;
   }
-  return JSON.parse(stored);
+  try {
+    const parsed = JSON.parse(stored);
+    if (Array.isArray(parsed) && parsed.length === 0 && Array.isArray(defaultValue) && defaultValue.length > 0) {
+      localStorage.setItem(key, JSON.stringify(defaultValue));
+      return defaultValue;
+    }
+    return parsed;
+  } catch (e) {
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+    return defaultValue;
+  }
 };
 
 const setLocalStorageItem = <T>(key: string, value: T): void => {
