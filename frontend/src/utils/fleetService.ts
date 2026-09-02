@@ -15,6 +15,7 @@ export interface Driver {
   id: string; // references profile id
   fleet_id?: string;
   vehicle_id?: string | null;
+  vehicle_plate?: string;
   full_name: string; // joined from profile
   phone: string;
   license_number: string;
