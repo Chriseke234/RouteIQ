@@ -354,7 +354,7 @@ export default function OptimizerPage() {
                 }`}
               >
                 <AlertTriangle className="w-3.5 h-3.5" />
-                <span>Add Police Stop</span>
+                <span>Add Stops</span>
               </button>
             </div>
             {clickMode === 'stop' && (
