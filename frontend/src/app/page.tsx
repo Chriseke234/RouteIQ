@@ -75,8 +75,8 @@ export default function Dashboard() {
       {/* Upper Header section */}
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Lagos Operations Command</h1>
-          <p className="text-xs sm:text-sm text-zinc-400 mt-1">Real-time status of fleet dispatch, route optimization, and operational efficiency.</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Delivery Operations Command</h1>
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">Live overview of your delivery trucks, active trips, and fuel costs.</p>
         </div>
         <div className="flex items-center gap-3">
           <Link 
@@ -85,7 +85,7 @@ export default function Dashboard() {
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-xl transition shadow-lg shadow-emerald-500/10 cursor-pointer"
           >
             <Plus className="w-4 h-4 font-bold" />
-            <span>Optimize New Route</span>
+            <span>Plan New Delivery Route</span>
           </Link>
         </div>
       </div>
@@ -95,41 +95,41 @@ export default function Dashboard() {
         {/* Vehicles card */}
         <div className="p-5 sm:p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Vehicles</span>
+            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Delivery Trucks</span>
             <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-emerald-400">
               <Truck className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
             <span className="text-2xl sm:text-3xl font-extrabold text-white">{activeVehicles}</span>
-            <span className="text-xs sm:text-sm text-zinc-500">/ {vehicles.length} active</span>
+            <span className="text-xs sm:text-sm text-zinc-500">/ {vehicles.length} active on the road</span>
           </div>
           <div className="mt-2 text-xs text-zinc-400 flex items-center gap-1.5">
-            <span className="font-semibold text-emerald-400">{totalCapacityKg.toLocaleString()} kg</span> total load capacity.
+            <span className="font-semibold text-emerald-400">{totalCapacityKg.toLocaleString()} kg</span> total cargo capacity.
           </div>
         </div>
 
         {/* Dispatch Trips card */}
         <div className="p-5 sm:p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Active Trips</span>
+            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Ongoing Trips</span>
             <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-sky-400">
               <Navigation className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
             <span className="text-2xl sm:text-3xl font-extrabold text-white">{activeTripsCount}</span>
-            <span className="text-xs sm:text-sm text-zinc-500">assigned</span>
+            <span className="text-xs sm:text-sm text-zinc-500">trips on the road</span>
           </div>
           <div className="mt-2 text-xs text-zinc-400 flex items-center gap-1.5">
-            <span className="font-semibold text-sky-400">{completedTripsCount}</span> routes completed this week.
+            <span className="font-semibold text-sky-400">{completedTripsCount}</span> delivery routes finished this week.
           </div>
         </div>
 
         {/* Fuel Expense card */}
         <div className="p-5 sm:p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Fuel Cost</span>
+            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Fuel Spend</span>
             <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-amber-400">
               <Fuel className="w-5 h-5" />
             </div>
@@ -138,24 +138,24 @@ export default function Dashboard() {
             <span className="text-2xl sm:text-3xl font-extrabold text-white">₦{(totalFuelCostNGN).toLocaleString()}</span>
           </div>
           <div className="mt-2 text-xs text-zinc-400 flex items-center gap-1.5">
-            Avg: <span className="font-semibold text-amber-400">₦{averageFuelPrice}/L</span> over {totalFuelLiters.toLocaleString()} Liters.
+            Avg: <span className="font-semibold text-amber-400">₦{averageFuelPrice}/L</span> across {totalFuelLiters.toLocaleString()} Liters.
           </div>
         </div>
 
         {/* Drivers card */}
         <div className="p-5 sm:p-6 bg-zinc-950/40 border border-zinc-800 rounded-2xl relative overflow-hidden backdrop-blur-md">
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Staffing</span>
+            <span className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">Our Drivers</span>
             <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-violet-400">
               <Users className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
             <span className="text-2xl sm:text-3xl font-extrabold text-white">{drivers.length}</span>
-            <span className="text-xs sm:text-sm text-zinc-500">drivers registered</span>
+            <span className="text-xs sm:text-sm text-zinc-500">drivers on team</span>
           </div>
           <div className="mt-2 text-xs text-zinc-400 flex items-center gap-1.5">
-            <span className="font-semibold text-violet-400">{drivers.filter(d => d.vehicle_id).length}</span> drivers assigned to vehicles.
+            <span className="font-semibold text-violet-400">{drivers.filter(d => d.vehicle_id).length}</span> assigned to trucks.
           </div>
         </div>
       </div>
@@ -167,26 +167,26 @@ export default function Dashboard() {
           <div className="p-4 sm:p-6 bg-zinc-950/30 border border-zinc-800 rounded-2xl">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
               <div>
-                <h3 className="text-base sm:text-lg font-bold text-white">Active Dispatch Routes</h3>
-                <p className="text-xs text-zinc-400">Currently active VRP optimized assignments.</p>
+                <h3 className="text-base sm:text-lg font-bold text-white">Deliveries on the Road</h3>
+                <p className="text-xs text-zinc-400">Live trips currently delivering packages across town.</p>
               </div>
               <Link id="link-dashboard-live-tracking" href="/live-map" className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1">
                 <Map className="w-3.5 h-3.5" />
-                <span>View Live tracking</span>
+                <span>Open Live Map Tracker</span>
               </Link>
             </div>
 
             {trips.length === 0 ? (
               <div className="py-12 text-center border border-dashed border-zinc-800 rounded-xl">
                 <Navigation className="w-8 h-8 mx-auto text-zinc-600 mb-3" />
-                <h4 className="text-sm font-bold text-zinc-300">No Active Trips Found</h4>
-                <p className="text-xs text-zinc-500 mt-1 max-w-xs mx-auto">Create and optimize a routing sequence to assign trips to drivers.</p>
+                <h4 className="text-sm font-bold text-zinc-300">No Deliveries on the Road</h4>
+                <p className="text-xs text-zinc-500 mt-1 max-w-xs mx-auto">Plan a new delivery trip to assign stops to your drivers.</p>
                  <Link 
                   id="link-dashboard-configure-stops"
                   href="/optimizer" 
                   className="inline-block mt-4 px-4 py-2 text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg transition border border-zinc-700"
                 >
-                  Configure Stops on Map
+                  Plan Route on Map
                 </Link>
               </div>
             ) : (
@@ -198,7 +198,7 @@ export default function Dashboard() {
                       <tr className="border-b border-zinc-800 text-xs font-semibold text-zinc-400">
                         <th className="pb-3">Trip ID</th>
                         <th className="pb-3">Driver</th>
-                        <th className="pb-3">Stops</th>
+                        <th className="pb-3">Stops Completed</th>
                         <th className="pb-3">Status</th>
                         <th className="pb-3">Action</th>
                       </tr>
@@ -302,12 +302,12 @@ export default function Dashboard() {
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
                   <UserSquare2 className="w-5 h-5 text-violet-400" />
-                  Fleet Drivers Roster
+                  Delivery Drivers
                 </h3>
-                <p className="text-xs text-zinc-400">Active drivers, license numbers, and assigned vehicle plates.</p>
+                <p className="text-xs text-zinc-400">Registered drivers, license numbers, and assigned truck plates.</p>
               </div>
               <Link href="/driver" className="text-xs font-semibold text-violet-400 hover:text-violet-300 flex items-center gap-1">
-                <span>Driver Portal</span>
+                <span>Open Driver App</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -346,11 +346,11 @@ export default function Dashboard() {
         {/* Right Column: Recent Fuel Logs */}
         <div className="space-y-6">
           <div className="p-6 bg-zinc-950/30 border border-zinc-800 rounded-2xl">
-            <h3 className="text-lg font-bold text-white mb-6">Recent Fuel Purges</h3>
+            <h3 className="text-lg font-bold text-white mb-6">Recent Fuel Fill-ups</h3>
             
             {fuelLogs.length === 0 ? (
               <div className="py-12 text-center text-zinc-500 text-xs">
-                No recent fuel logs recorded. Drivers can log fuel transactions via the Driver Portal.
+                No recent fuel fill-ups recorded. Drivers can log fuel fill-ups from the Driver App.
               </div>
             ) : (
               <div className="space-y-4">
@@ -378,10 +378,10 @@ export default function Dashboard() {
             <div className="space-y-1">
               <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest flex items-center gap-1.5">
                 <TrendingUp className="w-3.5 h-3.5" />
-                VRP Efficiency
+                Smart Route Savings
               </span>
-              <h4 className="text-lg font-bold text-white">Route Optimization</h4>
-              <p className="text-xs text-zinc-400">Nigerian road delay modifiers have reduced fleet travel cost by 28% compared to straight-line paths.</p>
+              <h4 className="text-lg font-bold text-white">Route Planning</h4>
+              <p className="text-xs text-zinc-400">Smart routing around potholes, traffic, and police checkpoints saved 28% in fuel and travel time.</p>
             </div>
           </div>
         </div>

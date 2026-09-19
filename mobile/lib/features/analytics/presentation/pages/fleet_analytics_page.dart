@@ -166,11 +166,11 @@ class _FleetAnalyticsPageState extends State<FleetAnalyticsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Fleet Operations & Live Telemetry",
+                        "Truck Status & Live Driver Updates",
                         style: TextStyle(color: AppTheme.textPrimary, fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "Real-time GPS telemetry, battery levels, and route savings per vehicle.",
+                        "Live driver positions, battery health, and fuel savings per truck.",
                         style: TextStyle(color: AppTheme.textMuted, fontSize: 12),
                       ),
                     ],
@@ -216,30 +216,30 @@ class _FleetAnalyticsPageState extends State<FleetAnalyticsPage> {
       childAspectRatio: isDesktop ? 1.8 : 1.4,
       children: [
         _buildStatCard(
-          title: "Active Fleet Units",
+          title: "Active Delivery Trucks",
           value: "28 / 32",
-          subtitle: "87.5% Fleet Utilization",
+          subtitle: "87.5% of trucks on the road",
           icon: AppSvgIcon.truck,
           accentColor: AppTheme.primary,
         ),
         _buildStatCard(
-          title: "Diesel Fuel Saved",
+          title: "Fuel Money Saved",
           value: "37.8%",
-          subtitle: "₦4,820,000 Saved this month",
+          subtitle: "₦4,820,000 saved this month",
           icon: AppSvgIcon.fuel,
           accentColor: AppTheme.success,
         ),
         _buildStatCard(
-          title: "Total Distance Tracked",
+          title: "Total Distance Covered",
           value: "14,920 km",
-          subtitle: "100% Vector Clock Synced",
+          subtitle: "Fully synced with drivers",
           icon: AppSvgIcon.route,
           accentColor: AppTheme.warning,
         ),
         _buildStatCard(
-          title: "On-Time Dispatch Rate",
+          title: "On-Time Delivery Rate",
           value: "98.4%",
-          subtitle: "Average 100m Geofence Stop",
+          subtitle: "Deliveries on schedule",
           icon: AppSvgIcon.checkCircle,
           accentColor: const Color(0xFFA855F7),
         ),
@@ -300,7 +300,7 @@ class _FleetAnalyticsPageState extends State<FleetAnalyticsPage> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildFilterButton("all", "All Units"),
+          _buildFilterButton("all", "All Trucks"),
           _buildFilterButton("in_transit", "In Transit"),
           _buildFilterButton("delivering", "Delivering"),
           _buildFilterButton("idle", "Idle"),
@@ -337,10 +337,10 @@ class _FleetAnalyticsPageState extends State<FleetAnalyticsPage> {
     String statusLabel = "In Transit";
     if (v.status == 'delivering') {
       statusColor = AppTheme.warning;
-      statusLabel = "At Geofence Stop";
+      statusLabel = "Making Delivery";
     } else if (v.status == 'idle') {
       statusColor = AppTheme.textMuted;
-      statusLabel = "Depot Idle";
+      statusLabel = "Parked at Garage";
     }
 
     return Container(
@@ -455,7 +455,7 @@ class _FleetAnalyticsPageState extends State<FleetAnalyticsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Recent Fleet Trip Manifests & Dispatches",
+            "Recent Completed Trips",
             style: TextStyle(color: AppTheme.textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),

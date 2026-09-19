@@ -152,7 +152,7 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
                       padding: EdgeInsets.only(bottom: 4),
                       child: AppSvgIcon(icon: AppSvgIcon.navigation, size: 20, color: AppTheme.primary),
                     ),
-                    label: "Live Route",
+                    label: "Live Map",
                   ),
                   BottomNavigationBarItem(
                     icon: Padding(
@@ -163,7 +163,7 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
                       padding: EdgeInsets.only(bottom: 4),
                       child: AppSvgIcon(icon: AppSvgIcon.route, size: 20, color: AppTheme.primary),
                     ),
-                    label: "AI Optimizer",
+                    label: "Route Planner",
                   ),
                   BottomNavigationBarItem(
                     icon: Padding(
@@ -174,18 +174,37 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
                       padding: EdgeInsets.only(bottom: 4),
                       child: AppSvgIcon(icon: AppSvgIcon.analytics, size: 20, color: AppTheme.primary),
                     ),
-                    label: "Fleet Hub",
+                    label: "Trucks & Team",
                   ),
                 ],
               ),
             ),
+            body: widget.body,
           );
         }
+
+        // Tablet & Desktop
+        return Scaffold(
+          backgroundColor: AppTheme.background,
+          body: Row(
+            children: [
+              _buildSidebar(isDesktop: isDesktop),
+              Expanded(
+                child: Column(
+                  children: [
+                    _buildTopHeader(isDesktop: isDesktop),
+                    Expanded(child: widget.body),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
 
-  Widget _buildTopHeader({required bool isMobile}) {
+  Widget _buildTopHeader({required bool isDesktop}) {
     return Container(
       height: 64,
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -221,7 +240,7 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
                     CircleAvatar(radius: 3, backgroundColor: AppTheme.success),
                     SizedBox(width: 6),
                     Text(
-                      "PWA Active • Sync Online",
+                      "PWA Active • Live Online",
                       style: TextStyle(color: AppTheme.success, fontSize: 11, fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -250,30 +269,35 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
 
     return Container(
       width: width,
+      height: double.infinity,
       decoration: const BoxDecoration(
         color: AppTheme.surface,
         border: Border(right: BorderSide(color: AppTheme.surfaceElevated, width: 1)),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Brand Logo
+          // Brand
           Container(
-            height: 72,
-            padding: EdgeInsets.symmetric(horizontal: isDesktop ? 20 : 12),
+            height: 64,
+            padding: EdgeInsets.symmetric(horizontal: isDesktop ? 20 : 16),
             alignment: Alignment.centerLeft,
             child: Row(
+              mainAxisAlignment: isDesktop ? MainAxisAlignment.start : MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: 36,
+                  height: 36,
                   decoration: BoxDecoration(
                     color: AppTheme.primary.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: AppTheme.primary.withValues(alpha: 0.4)),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
                   ),
-                  child: const Center(
-                    child: AppSvgIcon(icon: AppSvgIcon.truck, size: 22, color: AppTheme.primary),
+                  padding: const EdgeInsets.all(8),
+                  child: const AppSvgIcon(
+                    icon: AppSvgIcon.route,
+                    color: AppTheme.primary,
+                    size: 20,
                   ),
                 ),
                 if (isDesktop) ...[
@@ -286,16 +310,16 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
                         "RouteIQ",
                         style: TextStyle(
                           color: AppTheme.textPrimary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 0.5,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -0.5,
                         ),
                       ),
                       Text(
-                        "Fleet AI & Logistics",
+                        "Smart Delivery Logistics",
                         style: TextStyle(
                           color: AppTheme.textMuted,
-                          fontSize: 11,
+                          fontSize: 10,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -305,7 +329,6 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppTheme.surfaceElevated),
           const SizedBox(height: 16),
 
           // Nav Items
@@ -316,21 +339,21 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
                 _buildNavItem(
                   section: NavSection.navigation,
                   icon: AppSvgIcon.navigation,
-                  title: "Live Route & Map",
+                  title: "Live Driver Map",
                   isDesktop: isDesktop,
                 ),
                 const SizedBox(height: 6),
                 _buildNavItem(
                   section: NavSection.optimizer,
                   icon: AppSvgIcon.route,
-                  title: "AI Route Optimizer",
+                  title: "Smart Route Planner",
                   isDesktop: isDesktop,
                 ),
                 const SizedBox(height: 6),
                 _buildNavItem(
                   section: NavSection.analytics,
                   icon: AppSvgIcon.analytics,
-                  title: "Fleet Analytics Hub",
+                  title: "Trucks & Team Hub",
                   isDesktop: isDesktop,
                 ),
               ],

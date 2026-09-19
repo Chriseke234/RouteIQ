@@ -132,8 +132,8 @@ export default function FleetPage() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Fleet & Driver Management</h1>
-          <p className="text-xs sm:text-sm text-zinc-400 mt-1">Register vehicles, update load capacities, and manage driver credentials.</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Manage Trucks & Drivers</h1>
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">Register delivery trucks, set cargo weight limits, and manage your driver team.</p>
         </div>
         
         {/* Tabs switcher */}
@@ -148,7 +148,7 @@ export default function FleetPage() {
             }`}
           >
             <Truck className="w-4 h-4" />
-            <span>Vehicles</span>
+            <span>Trucks</span>
           </button>
           <button
             id="btn-fleet-tab-drivers"
@@ -169,14 +169,14 @@ export default function FleetPage() {
         // --- VEHICLES TAB ---
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-base sm:text-lg font-bold text-white">Registered Trucks</h3>
+            <h3 className="text-base sm:text-lg font-bold text-white">Delivery Trucks</h3>
             <button
               id="btn-fleet-toggle-vehicle-form"
               onClick={() => setShowVehicleForm(!showVehicleForm)}
               className="flex items-center gap-2 px-3 py-2 text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-xl transition cursor-pointer"
             >
               <Plus className="w-4 h-4 font-bold" />
-              <span>Register Vehicle</span>
+              <span>Add New Truck</span>
             </button>
           </div>
 
@@ -195,7 +195,7 @@ export default function FleetPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Model</label>
+                <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Truck Model</label>
                 <input 
                   type="text" 
                   required
@@ -206,7 +206,7 @@ export default function FleetPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Load Capacity (kg)</label>
+                <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Max Cargo Weight (kg)</label>
                 <input 
                   type="number" 
                   required
@@ -221,7 +221,7 @@ export default function FleetPage() {
                   type="submit"
                   className="flex-1 py-2.5 text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-lg transition"
                 >
-                  Save
+                  Save Truck
                 </button>
                 <button 
                   type="button"
@@ -242,9 +242,9 @@ export default function FleetPage() {
                 <thead>
                   <tr className="border-b border-zinc-800 text-xs font-semibold text-zinc-400">
                     <th className="p-4">Truck Plate</th>
-                    <th className="p-4">Model Description</th>
-                    <th className="p-4">Payload Capacity</th>
-                    <th className="p-4">Operational Status</th>
+                    <th className="p-4">Model</th>
+                    <th className="p-4">Max Cargo Weight</th>
+                    <th className="p-4">Status</th>
                     <th className="p-4 text-right">Actions</th>
                   </tr>
                 </thead>
@@ -346,14 +346,14 @@ export default function FleetPage() {
         // --- DRIVERS TAB ---
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-bold text-white">Registered Drivers</h3>
+            <h3 className="text-lg font-bold text-white">Team Drivers</h3>
             <button
               id="btn-fleet-toggle-driver-form"
               onClick={() => setShowDriverForm(!showDriverForm)}
               className="flex items-center gap-2 px-3 py-2 text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-xl transition cursor-pointer"
             >
               <Plus className="w-4 h-4 font-bold" />
-              <span>Add Driver Profile</span>
+              <span>Add New Driver</span>
             </button>
           </div>
 
@@ -383,7 +383,7 @@ export default function FleetPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">License Number</label>
+                <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Driver License #</label>
                 <input 
                   type="text" 
                   required
@@ -394,7 +394,7 @@ export default function FleetPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Assign Vehicle</label>
+                <label className="block text-xs font-semibold text-zinc-400 uppercase mb-2">Assign to Truck</label>
                 <select
                   value={newDriver.vehicle_id || ''}
                   onChange={(e) => setNewDriver({ ...newDriver, vehicle_id: e.target.value })}
@@ -432,9 +432,9 @@ export default function FleetPage() {
                 <thead>
                   <tr className="border-b border-zinc-800 text-xs font-semibold text-zinc-400">
                     <th className="p-4">Driver Name</th>
-                    <th className="p-4">Contact Phone</th>
-                    <th className="p-4">License Number</th>
-                    <th className="p-4">Assigned Vehicle</th>
+                    <th className="p-4">Phone</th>
+                    <th className="p-4">License #</th>
+                    <th className="p-4">Assigned Truck</th>
                     <th className="p-4 text-right">Actions</th>
                   </tr>
                 </thead>

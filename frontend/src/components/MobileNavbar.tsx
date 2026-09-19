@@ -21,10 +21,10 @@ export default function MobileNavbar() {
 
   const menuItems = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-    { name: 'Optimizer', href: '/optimizer', icon: Navigation },
+    { name: 'Planner', href: '/optimizer', icon: Navigation },
     { name: 'Live Map', href: '/live-map', icon: MapPin },
-    { name: 'Fleet', href: '/fleet', icon: Truck },
-    { name: 'Driver', href: '/driver', icon: UserSquare2 },
+    { name: 'Trucks', href: '/fleet', icon: Truck },
+    { name: 'Driver App', href: '/driver', icon: UserSquare2 },
   ];
 
   return (
@@ -37,7 +37,7 @@ export default function MobileNavbar() {
           </div>
           <div>
             <h1 className="text-base font-bold tracking-tight text-white leading-none">RouteIQ</h1>
-            <span className="text-[9px] text-zinc-400 font-medium uppercase tracking-widest block">Geospatial VRP</span>
+            <span className="text-[9px] text-zinc-400 font-medium uppercase tracking-widest block">Smart Delivery Logistics</span>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export default function MobileNavbar() {
               </div>
               <div>
                 <h1 className="text-lg font-bold tracking-tight text-white leading-none">RouteIQ</h1>
-                <span className="text-[10px] text-zinc-400 font-medium uppercase tracking-widest block mt-1">Geospatial VRP</span>
+                <span className="text-[10px] text-zinc-400 font-medium uppercase tracking-widest block mt-1">Smart Delivery Logistics</span>
               </div>
             </div>
             <button

@@ -253,7 +253,7 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    "Mission-Critical Offline-First Fleet Logistics",
+                    "Smart Delivery Logistics & Route Planner",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 26,
@@ -263,7 +263,7 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   const SizedBox(height: 12),
                   const Text(
-                    "Intelligent route optimization, 100m geofence automation, vector clock sync, and telemetry streaming designed for high-efficiency enterprise fleets.",
+                    "Smart route planning, live driver tracking, offline delivery sync, and fuel savings built for delivery teams across Nigeria.",
                     style: TextStyle(color: AppTheme.textSecondary, fontSize: 13, height: 1.5),
                   ),
                 ],
@@ -300,7 +300,7 @@ class _AuthPageState extends State<AuthPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _isSignUp ? "Create Workspace Account" : "Welcome Back",
+                    _isSignUp ? "Create Account" : "Welcome Back",
                     style: const TextStyle(
                       color: AppTheme.textPrimary,
                       fontSize: 20,
@@ -309,7 +309,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ),
                   const Text(
-                    "Powered by Supabase & Local Cache",
+                    "Sign in to access your routes and drivers",
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12),
                   ),
                 ],
@@ -340,7 +340,7 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       child: Center(
                         child: Text(
-                          "Fleet Dispatcher",
+                          "Fleet Manager",
                           style: TextStyle(
                             color: _selectedRole == 'manager' ? Colors.white : AppTheme.textSecondary,
                             fontWeight: FontWeight.w600,

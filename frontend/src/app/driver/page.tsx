@@ -180,15 +180,15 @@ export default function DriverPortalPage() {
         <div>
           <h1 className="text-lg sm:text-xl font-extrabold text-white flex items-center gap-2">
             <UserSquare2 className="w-5 h-5 text-emerald-400" />
-            Driver Dispatch Portal
+            Driver App
           </h1>
-          <p className="text-xs text-zinc-400 mt-0.5">Field driver navigation terminal, waypoint checklist, and fuel logging.</p>
+          <p className="text-xs text-zinc-400 mt-0.5">Driver delivery checklist, stop tracker, and fuel fill-up logger.</p>
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
           {/* Driver Profile Switcher */}
           <div className="flex items-center gap-2 bg-zinc-900 px-3 py-1.5 rounded-xl border border-zinc-800">
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider hidden xs:inline">Driver Profile:</span>
+            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider hidden xs:inline">Driver:</span>
             <select
               id="select-driver-sim-profile"
               value={selectedDriverId}
@@ -210,7 +210,7 @@ export default function DriverPortalPage() {
                 className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold bg-zinc-900 hover:bg-zinc-850 text-amber-400 border border-amber-500/20 rounded-xl transition cursor-pointer"
               >
                 <Fuel className="w-3.5 h-3.5" />
-                <span>Log Diesel Refill</span>
+                <span>Log Fuel Fill-up</span>
               </button>
               <button
                 id="btn-driver-sim-complete-trip"
@@ -218,7 +218,7 @@ export default function DriverPortalPage() {
                 className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-xl transition cursor-pointer"
               >
                 <CheckCircle className="w-3.5 h-3.5 fill-zinc-950" />
-                <span>Mark Arrived</span>
+                <span>Finish Trip</span>
               </button>
             </div>
           )}
@@ -253,21 +253,21 @@ export default function DriverPortalPage() {
                       : 'bg-zinc-850 text-zinc-400 border-zinc-700'
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${activeTrip ? 'bg-emerald-400 animate-pulse' : 'bg-zinc-500'}`} />
-                    {activeTrip ? 'En Route' : 'Idle'}
+                    {activeTrip ? 'On Delivery' : 'Available'}
                   </span>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3 pt-2 border-t border-zinc-850 text-xs">
                 <div>
-                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Assigned Vehicle</span>
+                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Assigned Truck</span>
                   <span className="font-bold text-zinc-200 font-mono flex items-center gap-1.5 mt-0.5">
                     <Truck className="w-3.5 h-3.5 text-zinc-400" />
-                    {currentDriver.vehicle_plate || currentDriver.license_number || 'TRUCK-LAG-101'}
+                    {currentDriver.vehicle_plate || currentDriver.license_number || 'LAG-492-AA'}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Trip Progress</span>
+                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Delivery Progress</span>
                   <span className="font-bold text-emerald-400 font-mono flex items-center gap-1.5 mt-0.5">
                     <Compass className="w-3.5 h-3.5 text-emerald-400" />
                     {progressPercent}% ({visitedCount}/{totalWaypoints} Stops)
@@ -285,7 +285,7 @@ export default function DriverPortalPage() {
             </div>
           ) : (
             <div className="p-4 bg-zinc-950 border border-zinc-800 rounded-2xl text-center text-xs text-zinc-400">
-              Please select a driver profile above.
+              Please select a driver from the dropdown above.
             </div>
           )}
 
@@ -294,7 +294,7 @@ export default function DriverPortalPage() {
             <div className="flex items-center justify-between">
               <label className="text-xs font-extrabold text-zinc-300 uppercase tracking-widest flex items-center gap-2">
                 <Navigation className="w-4 h-4 text-emerald-400" />
-                Dispatched Waypoint Manifest
+                Today's Delivery Stops
               </label>
               {activeTrip && (
                 <span className="text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full capitalize">
@@ -373,8 +373,8 @@ export default function DriverPortalPage() {
               <div className="flex-1 min-h-[220px] flex flex-col items-center justify-center p-8 border border-dashed border-zinc-800 rounded-2xl text-center space-y-3">
                 <Navigation className="w-8 h-8 text-zinc-700 animate-pulse" />
                 <div>
-                  <h4 className="text-sm font-bold text-zinc-300">No Dispatched Routes</h4>
-                  <p className="text-xs text-zinc-500 mt-1 max-w-[240px]">This driver profile currently has no active optimized trip assigned today.</p>
+                  <h4 className="text-sm font-bold text-zinc-300">No Trips Assigned Today</h4>
+                  <p className="text-xs text-zinc-500 mt-1 max-w-[240px]">This driver currently has no assigned delivery trips today.</p>
                 </div>
               </div>
             )}
@@ -390,8 +390,8 @@ export default function DriverPortalPage() {
                 <AlertCircle className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">Field Simulation Instructions</h3>
-                <p className="text-[11px] text-zinc-400 mt-0.5">Use this interface to emulate driver interactions, check off arrival waypoints, and record diesel expenses in real-time.</p>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider">Driver Instructions</h3>
+                <p className="text-[11px] text-zinc-400 mt-0.5">Check off each delivery stop as you arrive, and record fuel fill-ups at gas stations.</p>
               </div>
             </div>
 

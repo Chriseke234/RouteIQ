@@ -22,10 +22,10 @@ export default function Sidebar({ className = '' }: SidebarProps) {
 
   const menuItems = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-    { name: 'Route Optimizer', href: '/optimizer', icon: Navigation },
-    { name: 'Live Map', href: '/live-map', icon: MapPin },
-    { name: 'Fleet Management', href: '/fleet', icon: Truck },
-    { name: 'Driver Portal', href: '/driver', icon: UserSquare2 },
+    { name: 'Smart Route Planner', href: '/optimizer', icon: Navigation },
+    { name: 'Live Driver Tracker', href: '/live-map', icon: MapPin },
+    { name: 'Trucks & Drivers', href: '/fleet', icon: Truck },
+    { name: 'Driver App', href: '/driver', icon: UserSquare2 },
   ];
 
   return (
@@ -37,7 +37,7 @@ export default function Sidebar({ className = '' }: SidebarProps) {
         </div>
         <div>
           <h1 className="text-lg font-bold tracking-tight text-white leading-none">RouteIQ</h1>
-          <span className="text-[10px] text-zinc-400 font-medium uppercase tracking-widest mt-1 block">Geospatial VRP</span>
+          <span className="text-[10px] text-zinc-400 font-medium uppercase tracking-widest mt-1 block">Smart Delivery Logistics</span>
         </div>
       </div>
 

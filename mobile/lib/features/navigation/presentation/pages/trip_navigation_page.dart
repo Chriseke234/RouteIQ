@@ -136,7 +136,7 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
 
     setState(() {
       _trip = updatedTrip;
-      _statusBannerMessage = "Stop updated to '$newStatus'. Vector Clock: [${updatedTrip.vectorClockClient}, ${updatedTrip.vectorClockServer}]";
+      _statusBannerMessage = "Stop marked as '$newStatus' and saved.";
     });
 
     await LocalStorageService.saveActiveTrip(updatedTrip);
@@ -342,7 +342,7 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
                   size: 16,
                   color: Colors.white,
                 ),
-                label: Text(_isSimulatingMovement ? "Stop GPS Sim" : "Simulate Live GPS"),
+                label: Text(_isSimulatingMovement ? "Stop Test Drive" : "Test Drive Live GPS"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _isSimulatingMovement ? AppTheme.warning : AppTheme.surface,
                   foregroundColor: Colors.white,
@@ -366,7 +366,7 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      _isDeviated ? "Deviated" : "On Schedule",
+                      _isDeviated ? "Off Route" : "On Schedule",
                       style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -408,7 +408,7 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
                           AppSvgIcon(icon: AppSvgIcon.mapPin, size: 18, color: AppTheme.primary),
                           SizedBox(width: 8),
                           Text(
-                            "Next Target Stop",
+                            "Next Delivery Stop",
                             style: TextStyle(color: AppTheme.textSecondary, fontSize: 12, fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -419,10 +419,9 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
                           color: isArrived
                               ? AppTheme.warning.withValues(alpha: 0.15)
                               : AppTheme.primary.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          isArrived ? "INSIDE 100m GEOFENCE" : "STOP #${activeNode.sequenceIndex + 1}",
+                          isArrived ? "ARRIVED AT DESTINATION" : "STOP #${activeNode.sequenceIndex + 1}",
                           style: TextStyle(
                             color: isArrived ? AppTheme.warning : AppTheme.primaryHover,
                             fontSize: 11,
@@ -456,7 +455,7 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
                             size: 16,
                             color: Colors.white,
                           ),
-                          label: Text(isArrived ? "Confirm Delivery" : "Mark Arrived"),
+                          label: Text(isArrived ? "Mark as Delivered" : "Mark Arrived"),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: isArrived ? AppTheme.success : AppTheme.primary,
                           ),
@@ -485,7 +484,7 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Delivery Manifest Sequence",
+                  "Today's Delivery Stops",
                   style: TextStyle(color: AppTheme.textPrimary, fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -514,7 +513,7 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
                   statusLabel = "Delivered";
                 } else if (isArrived) {
                   statusColor = AppTheme.warning;
-                  statusLabel = "At Geofence";
+                  statusLabel = "Arrived";
                 } else if (isSkipped) {
                   statusColor = AppTheme.error;
                   statusLabel = "Skipped";
@@ -604,7 +603,7 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
           ),
           const SizedBox(height: 8),
           const Text(
-            "Dispatch a new route or initialize demo data.",
+            "Create a route in Route Planner to start driving.",
             style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
           ),
           const SizedBox(height: 20),

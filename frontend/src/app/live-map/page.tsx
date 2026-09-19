@@ -287,9 +287,9 @@ export default function LiveMapPage() {
         <div>
           <h1 className="text-lg sm:text-xl font-extrabold text-white flex items-center gap-2">
             <Map className="w-5 h-5 text-amber-500" />
-            Live Dispatch Tracking
+            Live Driver Tracker
           </h1>
-          <p className="text-xs text-zinc-400 mt-0.5">Monitor vehicle telemetry coordinates and real-time waypoint completion.</p>
+          <p className="text-xs text-zinc-400 mt-0.5">Watch your drivers move live on the map and track completed delivery stops.</p>
         </div>
         <div className="flex items-center gap-2.5 flex-wrap">
           <button
@@ -302,7 +302,7 @@ export default function LiveMapPage() {
             }`}
           >
             <Play className={`w-3.5 h-3.5 ${isSimulating ? 'fill-amber-400 text-amber-400' : 'fill-zinc-950 text-zinc-950'}`} />
-            <span>{isSimulating ? 'Pause Dispatch' : 'Simulate Live Dispatch'}</span>
+            <span>{isSimulating ? 'Pause Deliveries' : 'Test Drive Deliveries'}</span>
           </button>
           <button
             id="btn-live-map-reset-simulation"
@@ -319,13 +319,13 @@ export default function LiveMapPage() {
       <div className="flex-1 flex flex-col lg:flex-row min-h-0 overflow-y-auto lg:overflow-hidden">
         {/* Left Side: Status Pane */}
         <div className="w-full lg:w-80 flex flex-col border-b lg:border-b-0 lg:border-r border-zinc-800 bg-zinc-950/20 shrink-0 p-4 sm:p-6 space-y-6 overflow-y-auto">
-          <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Active Fleet Positions</label>
+          <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Drivers on the Road</label>
           
           {simulatedDrivers.length === 0 ? (
             <div className="flex-1 border border-dashed border-zinc-800 rounded-xl flex flex-col items-center justify-center p-6 text-center text-xs min-h-[140px]">
               <Compass className="w-8 h-8 text-zinc-700 mb-3 animate-spin" style={{ animationDuration: '6s' }} />
-              <p className="text-zinc-400 font-bold">No Active Telemetry</p>
-              <p className="text-zinc-500 mt-1 max-w-[200px]">Click "Simulate Live Dispatch" to start real-time vehicle coordinate updates.</p>
+              <p className="text-zinc-400 font-bold">No Active Drivers on the Road</p>
+              <p className="text-zinc-500 mt-1 max-w-[200px]">Click "Test Drive Deliveries" to watch your drivers move and update stops in real time.</p>
             </div>
           ) : (
             <div className="space-y-4">

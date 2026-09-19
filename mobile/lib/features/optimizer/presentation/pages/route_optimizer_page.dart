@@ -163,7 +163,7 @@ class _RouteOptimizerPageState extends State<RouteOptimizerPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: AppTheme.success,
-            content: Text("AI Optimized Route deployed to active dispatch!"),
+            content: Text("Best route sent to driver!"),
           ),
         );
       }
@@ -184,7 +184,7 @@ class _RouteOptimizerPageState extends State<RouteOptimizerPage> {
           children: [
             AppSvgIcon(icon: AppSvgIcon.plus, size: 20, color: AppTheme.primary),
             SizedBox(width: 8),
-            Text("Add Destination Stop", style: TextStyle(fontSize: 18, color: Colors.white)),
+            Text("Add Delivery Stop", style: TextStyle(fontSize: 18, color: Colors.white)),
           ],
         ),
         content: Column(
@@ -296,14 +296,14 @@ class _RouteOptimizerPageState extends State<RouteOptimizerPage> {
                     AppSvgIcon(icon: AppSvgIcon.sparkle, size: 20, color: AppTheme.primaryHover),
                     SizedBox(width: 8),
                     Text(
-                      "AI TSP Route Optimization Engine",
+                      "Smart Route Planner",
                       style: TextStyle(color: AppTheme.textPrimary, fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 SizedBox(height: 6),
                 Text(
-                  "Solves multi-stop Traveling Salesperson constraints to minimize fuel, vehicle wear, and driver transit hours.",
+                  "Finds the quickest, most affordable route for all your delivery stops to save fuel and cut road time.",
                   style: TextStyle(color: AppTheme.textSecondary, fontSize: 13),
                 ),
               ],
@@ -331,7 +331,7 @@ class _RouteOptimizerPageState extends State<RouteOptimizerPage> {
                         child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                       )
                     : const AppSvgIcon(icon: AppSvgIcon.sparkle, size: 16, color: Colors.white),
-                label: Text(_isOptimizing ? "Optimizing..." : "Run AI Optimizer"),
+                label: Text(_isOptimizing ? "Finding Best Route..." : "Find Best Route"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.primary,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
@@ -358,30 +358,30 @@ class _RouteOptimizerPageState extends State<RouteOptimizerPage> {
       childAspectRatio: isDesktop ? 1.8 : 1.4,
       children: [
         _buildMetricCard(
-          title: "Fuel Savings",
+          title: "Fuel Saved",
           value: "-$percentReduction%",
-          subtitle: "Target: 35-40% Diesel Reduction",
+          subtitle: "Target: 35-40% Fuel Cut",
           icon: AppSvgIcon.fuel,
           accentColor: AppTheme.success,
         ),
         _buildMetricCard(
-          title: "Optimized Mileage",
+          title: "Total Distance",
           value: "${_optimizedDistanceKm.toStringAsFixed(1)} km",
-          subtitle: "Original: ${_originalDistanceKm.toStringAsFixed(1)} km",
+          subtitle: "Before: ${_originalDistanceKm.toStringAsFixed(1)} km",
           icon: AppSvgIcon.route,
           accentColor: AppTheme.primary,
         ),
         _buildMetricCard(
-          title: "Diesel Conserved",
+          title: "Fuel Saved (Liters)",
           value: "${_dieselSavedLiters.toStringAsFixed(1)} L",
           subtitle: "Est. Savings: ₦${(_dieselSavedLiters * 1350).toStringAsFixed(0)}",
           icon: AppSvgIcon.sparkle,
           accentColor: AppTheme.warning,
         ),
         _buildMetricCard(
-          title: "Transit Time Saved",
+          title: "Driving Time Saved",
           value: "$_timeSavedMinutes mins",
-          subtitle: "Reduced Idle Engine Hours",
+          subtitle: "Fewer hours stuck in traffic",
           icon: AppSvgIcon.clock,
           accentColor: const Color(0xFFA855F7), // Purple
         ),
@@ -449,11 +449,11 @@ class _RouteOptimizerPageState extends State<RouteOptimizerPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Delivery Waypoints Sequence",
+                    "Today's Delivery Stops",
                     style: TextStyle(color: AppTheme.textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Drag to manually adjust or click 'Apply Route' to deploy optimized sequence.",
+                    "Drag stops to change order, or click 'Send Route to Driver' to start.",
                     style: const TextStyle(color: AppTheme.textMuted, fontSize: 12),
                   ),
                 ],
@@ -462,7 +462,7 @@ class _RouteOptimizerPageState extends State<RouteOptimizerPage> {
                 ElevatedButton.icon(
                   onPressed: _applyToActiveTrip,
                   icon: const AppSvgIcon(icon: AppSvgIcon.checkCircle, size: 16, color: Colors.white),
-                  label: const Text("Apply Route to Dispatch"),
+                  label: const Text("Send Route to Driver"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.success,
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
