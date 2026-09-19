@@ -7,9 +7,8 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import '../lib/core/offline/geofence_service.dart';
 import '../lib/features/trip/domain/entities/trip.dart';
 
-class MockGeolocatorPlatform extends PlatformInterface
-    implements GeolocatorPlatform {
-  MockGeolocatorPlatform() : super(token: const Object());
+class MockGeolocatorPlatform extends GeolocatorPlatform
+    with MockPlatformInterfaceMixin {
 
   @override
   double distanceBetween(
