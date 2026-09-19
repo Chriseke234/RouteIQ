@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/app_svg_icons.dart';
 
@@ -80,6 +80,61 @@ class _FleetAnalyticsPageState extends State<FleetAnalyticsPage> {
       speedKph: 0,
       imageUrl: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
       fuelSavedPercent: 35.8,
+    ),
+    VehicleItem(
+      id: "FLT-KAN-501",
+      name: "Volvo FH16 Aero",
+      type: "Long-Haul Freight Hauler",
+      driver: "Kayode Adeleke (DRV-120)",
+      status: "in_transit",
+      batteryLevel: 91,
+      speedKph: 62,
+      imageUrl: "https://images.unsplash.com/photo-1508974239320-0a029497e820?auto=format&fit=crop&w=600&q=80",
+      fuelSavedPercent: 39.5,
+    ),
+    VehicleItem(
+      id: "FLT-IBD-220",
+      name: "Mercedes Sprinter 319",
+      type: "High-Priority Parcel Van",
+      driver: "Samuel Osei (DRV-133)",
+      status: "delivering",
+      batteryLevel: 85,
+      speedKph: 0,
+      imageUrl: "https://images.unsplash.com/photo-1592838064575-70ed626d3a0e?auto=format&fit=crop&w=600&q=80",
+      fuelSavedPercent: 42.1,
+    ),
+    VehicleItem(
+      id: "FLT-ABJ-770",
+      name: "MAN TGX 26.540",
+      type: "Heavy Inter-City Freight",
+      driver: "Usman Danjuma (DRV-142)",
+      status: "in_transit",
+      batteryLevel: 96,
+      speedKph: 71,
+      imageUrl: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80",
+      fuelSavedPercent: 37.0,
+    ),
+    VehicleItem(
+      id: "FLT-LAG-614",
+      name: "Iveco Daily 35S18",
+      type: "Urban Logistics Courier",
+      driver: "Babatunde Lawal (DRV-158)",
+      status: "in_transit",
+      batteryLevel: 89,
+      speedKph: 48,
+      imageUrl: "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=600&q=80",
+      fuelSavedPercent: 38.9,
+    ),
+    VehicleItem(
+      id: "FLT-ENUG-305",
+      name: "DAF XF 480 Super Space",
+      type: "Regional Distribution Rigid",
+      driver: "Chinedu Eze (DRV-165)",
+      status: "delivering",
+      batteryLevel: 78,
+      speedKph: 0,
+      imageUrl: "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=600&q=80",
+      fuelSavedPercent: 40.3,
     ),
   ];
 
