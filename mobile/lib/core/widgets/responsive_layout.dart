@@ -71,35 +71,17 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth >= 1100;
         final isTablet = constraints.maxWidth >= 650 && constraints.maxWidth < 1100;
-        final isMobile = constraints.maxWidth < 650;
 
-        if (isDesktop) {
+        if (isDesktop || isTablet) {
           return Scaffold(
             backgroundColor: AppTheme.background,
             body: Row(
               children: [
-                _buildSidebar(isDesktop: true),
+                _buildSidebar(isDesktop: isDesktop),
                 Expanded(
                   child: Column(
                     children: [
-                      _buildTopHeader(isMobile: false),
-                      Expanded(child: widget.body),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        } else if (isTablet) {
-          return Scaffold(
-            backgroundColor: AppTheme.background,
-            body: Row(
-              children: [
-                _buildSidebar(isDesktop: false),
-                Expanded(
-                  child: Column(
-                    children: [
-                      _buildTopHeader(isMobile: false),
+                      _buildTopHeader(isDesktop: isDesktop),
                       Expanded(child: widget.body),
                     ],
                   ),
@@ -179,27 +161,8 @@ class _ResponsiveScaffoldState extends ConsumerState<ResponsiveScaffold> {
                 ],
               ),
             ),
-            body: widget.body,
           );
         }
-
-        // Tablet & Desktop
-        return Scaffold(
-          backgroundColor: AppTheme.background,
-          body: Row(
-            children: [
-              _buildSidebar(isDesktop: isDesktop),
-              Expanded(
-                child: Column(
-                  children: [
-                    _buildTopHeader(isDesktop: isDesktop),
-                    Expanded(child: widget.body),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
       },
     );
   }

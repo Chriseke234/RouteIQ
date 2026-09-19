@@ -382,7 +382,6 @@ class _TripNavigationPageState extends ConsumerState<TripNavigationPage> {
   Widget _buildDetailsAndQueuePanel() {
     final activeNode = _getActiveNode();
     final isArrived = activeNode?.nodeStatus == 'arrived';
-    final isDelivered = activeNode?.nodeStatus == 'delivered';
 
     return Container(
       color: AppTheme.surface,

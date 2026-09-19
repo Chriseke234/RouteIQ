@@ -1,11 +1,10 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/trip/domain/entities/trip.dart';
 
 /// Platform-safe local persistence service for PWA, Web, and Native targets.
 class LocalStorageService {
   static const String _keyActiveTrip = 'routeiq_active_trip';
-  static const String _keyTripHistory = 'routeiq_trip_history';
   static const String _keyTelemetryQueue = 'routeiq_telemetry_queue';
   static const String _keyUserSession = 'routeiq_user_session';
   static const String _keyUserRole = 'routeiq_user_role';

@@ -1,9 +1,8 @@
-﻿import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 import '../lib/core/offline/local_storage_service.dart';
-import '../lib/features/trip/domain/entities/trip.dart';
 
 void main() {
   setUp(() {
