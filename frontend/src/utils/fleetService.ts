@@ -81,9 +81,14 @@ const DEFAULT_DRIVERS: Driver[] = [
   { id: 'd-1', full_name: 'Babajide Okafor', phone: '+234 803 111 2222', license_number: 'LA-99281-A', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
   { id: 'd-2', full_name: 'Chinedu Musa', phone: '+234 812 333 4444', license_number: 'AB-88412-B', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
   { id: 'd-3', full_name: 'Tunde Balogun', phone: '+234 905 555 6666', license_number: 'KD-23091-C', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB' },
-  { id: 'd-4', full_name: 'Amina Abubakar', phone: '+234 802 777 8888', license_number: 'KN-54109-D', vehicle_id: 'v-4', vehicle_plate: 'PHC-552-LK' },
+  { id: 'd-4', full_name: 'Aminu Abubakar', phone: '+234 802 777 8888', license_number: 'KN-54109-D', vehicle_id: 'v-4', vehicle_plate: 'PHC-552-LK' },
   { id: 'd-5', full_name: 'Emeka Nnamdi', phone: '+234 814 999 0000', license_number: 'EN-77312-E', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
   { id: 'd-6', full_name: 'Olufemi Adebayo', phone: '+234 701 444 5555', license_number: 'OG-33190-F', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
+  { id: 'd-7', full_name: 'Kayode Adeleke', phone: '+234 809 123 4567', license_number: 'LA-77102-G', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
+  { id: 'd-8', full_name: 'Samuel Osei', phone: '+234 818 234 5678', license_number: 'IB-44912-H', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
+  { id: 'd-9', full_name: 'Usman Danjuma', phone: '+234 902 345 6789', license_number: 'AB-19304-I', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB' },
+  { id: 'd-10', full_name: 'Babatunde Lawal', phone: '+234 708 456 7890', license_number: 'LA-66289-J', vehicle_id: 'v-4', vehicle_plate: 'PHC-552-LK' },
+  { id: 'd-11', full_name: 'Chinedu Eze', phone: '+234 815 567 8901', license_number: 'EN-55104-K', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
 ];
 
 const DEFAULT_TRIPS: Trip[] = [
@@ -131,7 +136,7 @@ const DEFAULT_FUEL_LOGS: FuelLog[] = [
   { id: 'flog-3', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB', driver_id: 'd-3', driver_name: 'Tunde Balogun', amount_liters: 50, cost_ngn: 65000, timestamp: new Date(Date.now() - 3600000 * 4).toISOString() },
 ];
 
-const CURRENT_DATA_VERSION = 'routeiq_v3_2026_09_02';
+const CURRENT_DATA_VERSION = 'routeiq_v4_2026_09_19';
 
 // Helper to load/save localStorage with automatic cache purging
 const getLocalStorageItem = <T>(key: string, defaultValue: T): T => {
