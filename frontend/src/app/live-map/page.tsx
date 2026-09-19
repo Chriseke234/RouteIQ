@@ -61,7 +61,7 @@ export default function LiveMapPage() {
     }
 
     // Identify active or assigned trips that have waypoints
-    const activeTrips = trips.filter(t => t.waypoints && t.waypoints.length > 2);
+    const activeTrips = trips.filter(t => t.waypoints && t.waypoints.length >= 2);
     
     if (activeTrips.length === 0) {
       alert("No active or dispatched routes found. Please optimize and dispatch routes first!");
@@ -75,23 +75,48 @@ export default function LiveMapPage() {
       }
     });
 
+    // Helper to interpolate between two [lat, lng] points for smooth vehicle movement
+    const interpolatePoints = (p1: [number, number], p2: [number, number], steps: number = 8): [number, number][] => {
+      const points: [number, number][] = [];
+      for (let i = 0; i <= steps; i++) {
+        const factor = i / steps;
+        points.push([
+          p1[0] + (p2[0] - p1[0]) * factor,
+          p1[1] + (p2[1] - p1[1]) * factor,
+        ]);
+      }
+      return points;
+    };
+
     // Initialize simulation coordinates for each trip
     const initialSims: SimulatedDriver[] = activeTrips.map(trip => {
-      let coords: [number, number][] = [];
+      let rawCoords: [number, number][] = [];
       try {
         if (trip.route_geometry) {
-          coords = JSON.parse(trip.route_geometry);
+          rawCoords = JSON.parse(trip.route_geometry);
         }
       } catch (e) {
         console.error('Failed to parse trip geometry', e);
       }
 
-      if (coords.length === 0 && trip.waypoints) {
-        coords = trip.waypoints.map(w => [w.latitude, w.longitude]);
+      if (rawCoords.length === 0 && trip.waypoints) {
+        rawCoords = trip.waypoints.map(w => [w.latitude, w.longitude]);
+      }
+
+      // Interpolate smooth path
+      let smoothCoords: [number, number][] = [];
+      if (rawCoords.length >= 2) {
+        for (let i = 0; i < rawCoords.length - 1; i++) {
+          const seg = interpolatePoints(rawCoords[i], rawCoords[i + 1], 6);
+          if (i > 0) seg.shift(); // avoid duplicate joining points
+          smoothCoords.push(...seg);
+        }
+      } else {
+        smoothCoords = rawCoords;
       }
 
       // Find first coordinate or fallback to Lagos
-      const startCoord = coords[0] || [6.5244, 3.3792];
+      const startCoord = smoothCoords[0] || [6.5244, 3.3792];
 
       return {
         driver_id: trip.driver_id || `d-mock-${trip.id}`,
@@ -101,7 +126,7 @@ export default function LiveMapPage() {
         longitude: startCoord[1],
         speed: 40 + Math.random() * 20, // 40-60 km/h
         progressIndex: 0,
-        coordinates: coords
+        coordinates: smoothCoords
       };
     });
 
@@ -125,7 +150,7 @@ export default function LiveMapPage() {
           // Speed variation
           const speedVar = 45 + Math.random() * 15;
 
-          // Mock adding location log to service/Supabase database
+          // Add location log to service/Supabase database
           fleetService.addGpsLog({
             driver_id: drv.driver_id,
             latitude: nextCoord[0],
@@ -138,7 +163,7 @@ export default function LiveMapPage() {
           const matchedTrip = trips.find(t => t.driver_id === drv.driver_id || `d-mock-${t.id}` === drv.driver_id);
           if (matchedTrip && matchedTrip.waypoints) {
             const currentWaypoint = matchedTrip.waypoints.find(
-              w => Math.abs(w.latitude - nextCoord[0]) < 0.0001 && Math.abs(w.longitude - nextCoord[1]) < 0.0001
+              w => Math.abs(w.latitude - nextCoord[0]) < 0.005 && Math.abs(w.longitude - nextCoord[1]) < 0.005
             );
             if (currentWaypoint && currentWaypoint.status === 'pending') {
               fleetService.updateWaypointStatus(matchedTrip.id, currentWaypoint.id, 'visited');
@@ -164,12 +189,11 @@ export default function LiveMapPage() {
           activeTrips.forEach(async (t) => {
             await fleetService.updateTripStatus(t.id, 'completed');
           });
-          alert('All simulated deliveries have successfully arrived at their destinations!');
         }
 
         return updated;
       });
-    }, 2000);
+    }, 1200);
   };
 
   const handleResetSimulation = () => {
@@ -206,7 +230,7 @@ export default function LiveMapPage() {
   }));
 
   // Convert VRP routes geometry for background map rendering
-  const mapColors = ['#f59e0b', '#3b82f6', '#8b5cf6', '#ec4899', '#14b8a6'];
+  const mapColors = ['#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ec4899', '#06b6d4', '#eab308'];
   const mapRoutes = trips.map((trip, idx) => {
     let stops: any[] = [];
     try {
@@ -217,9 +241,21 @@ export default function LiveMapPage() {
           name: '',
           demand: 0
         }));
+      } else if (trip.waypoints && trip.waypoints.length > 0) {
+        stops = trip.waypoints.map(w => ({
+          coordinates: [w.latitude, w.longitude] as [number, number],
+          name: w.name,
+          demand: 0
+        }));
       }
     } catch (e) {
-      // fallback
+      if (trip.waypoints && trip.waypoints.length > 0) {
+        stops = trip.waypoints.map(w => ({
+          coordinates: [w.latitude, w.longitude] as [number, number],
+          name: w.name,
+          demand: 0
+        }));
+      }
     }
     return {
       vehicle_id: idx,
@@ -232,16 +268,14 @@ export default function LiveMapPage() {
   const mapStops: any[] = [];
   trips.forEach(t => {
     if (t.waypoints) {
-      t.waypoints.forEach((w, idx) => {
-        if (idx > 0 && idx < (t.waypoints?.length || 0) - 1) { // Skip depot starts/ends
-          mapStops.push({
-            id: w.id,
-            name: w.name,
-            latitude: w.latitude,
-            longitude: w.longitude,
-            demand: 0
-          });
-        }
+      t.waypoints.forEach((w) => {
+        mapStops.push({
+          id: w.id,
+          name: w.name,
+          latitude: w.latitude,
+          longitude: w.longitude,
+          demand: 150
+        });
       });
     }
   });

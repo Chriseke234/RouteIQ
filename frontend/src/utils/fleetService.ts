@@ -74,7 +74,10 @@ const DEFAULT_VEHICLES: Vehicle[] = [
   { id: 'v-1', plate_number: 'LAG-492-AA', model: 'Toyota Dyna Truck', capacity_kg: 1500, status: 'active' },
   { id: 'v-2', plate_number: 'ABJ-881-XY', model: 'Isuzu Elf Box Van', capacity_kg: 2500, status: 'active' },
   { id: 'v-3', plate_number: 'KND-104-BB', model: 'Ford Transit Cargo', capacity_kg: 1200, status: 'active' },
-  { id: 'v-4', plate_number: 'PHC-552-LK', model: 'Mercedes Sprinter', capacity_kg: 1000, status: 'maintenance' },
+  { id: 'v-4', plate_number: 'PHC-552-LK', model: 'Mercedes Sprinter', capacity_kg: 1000, status: 'active' },
+  { id: 'v-5', plate_number: 'KAN-710-AB', model: 'Volvo FH16 Hauler', capacity_kg: 5000, status: 'active' },
+  { id: 'v-6', plate_number: 'IBD-302-MN', model: 'Iveco Daily Courier', capacity_kg: 1800, status: 'active' },
+  { id: 'v-7', plate_number: 'ENUG-882-EE', model: 'DAF XF Super Space', capacity_kg: 4500, status: 'maintenance' },
 ];
 
 const DEFAULT_DRIVERS: Driver[] = [
@@ -82,13 +85,13 @@ const DEFAULT_DRIVERS: Driver[] = [
   { id: 'd-2', full_name: 'Chinedu Musa', phone: '+234 812 333 4444', license_number: 'AB-88412-B', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
   { id: 'd-3', full_name: 'Tunde Balogun', phone: '+234 905 555 6666', license_number: 'KD-23091-C', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB' },
   { id: 'd-4', full_name: 'Aminu Abubakar', phone: '+234 802 777 8888', license_number: 'KN-54109-D', vehicle_id: 'v-4', vehicle_plate: 'PHC-552-LK' },
-  { id: 'd-5', full_name: 'Emeka Nnamdi', phone: '+234 814 999 0000', license_number: 'EN-77312-E', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
-  { id: 'd-6', full_name: 'Olufemi Adebayo', phone: '+234 701 444 5555', license_number: 'OG-33190-F', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
+  { id: 'd-5', full_name: 'Emeka Nnamdi', phone: '+234 814 999 0000', license_number: 'EN-77312-E', vehicle_id: 'v-5', vehicle_plate: 'KAN-710-AB' },
+  { id: 'd-6', full_name: 'Olufemi Adebayo', phone: '+234 701 444 5555', license_number: 'OG-33190-F', vehicle_id: 'v-6', vehicle_plate: 'IBD-302-MN' },
   { id: 'd-7', full_name: 'Kayode Adeleke', phone: '+234 809 123 4567', license_number: 'LA-77102-G', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
   { id: 'd-8', full_name: 'Samuel Osei', phone: '+234 818 234 5678', license_number: 'IB-44912-H', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY' },
   { id: 'd-9', full_name: 'Usman Danjuma', phone: '+234 902 345 6789', license_number: 'AB-19304-I', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB' },
   { id: 'd-10', full_name: 'Babatunde Lawal', phone: '+234 708 456 7890', license_number: 'LA-66289-J', vehicle_id: 'v-4', vehicle_plate: 'PHC-552-LK' },
-  { id: 'd-11', full_name: 'Chinedu Eze', phone: '+234 815 567 8901', license_number: 'EN-55104-K', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA' },
+  { id: 'd-11', full_name: 'Chinedu Eze', phone: '+234 815 567 8901', license_number: 'EN-55104-K', vehicle_id: 'v-6', vehicle_plate: 'IBD-302-MN' },
 ];
 
 const DEFAULT_TRIPS: Trip[] = [
@@ -110,22 +113,83 @@ const DEFAULT_TRIPS: Trip[] = [
     driver_id: 'd-2',
     driver_name: 'Chinedu Musa',
     vehicle_plate: 'ABJ-881-XY',
-    status: 'assigned',
+    status: 'active',
     waypoints: [
-      { id: 'wp-201', trip_id: 'trp-002', sequence: 0, name: 'Apapa Port Logistics Hub', latitude: 6.4474, longitude: 3.3585, status: 'pending' },
+      { id: 'wp-201', trip_id: 'trp-002', sequence: 0, name: 'Apapa Port Logistics Hub', latitude: 6.4474, longitude: 3.3585, status: 'visited' },
       { id: 'wp-202', trip_id: 'trp-002', sequence: 1, name: 'Surulere Retail Warehouse', latitude: 6.4969, longitude: 3.3542, status: 'pending' },
       { id: 'wp-203', trip_id: 'trp-002', sequence: 2, name: 'Yaba Tech Depot', latitude: 6.5186, longitude: 3.3712, status: 'pending' },
+      { id: 'wp-204', trip_id: 'trp-002', sequence: 3, name: 'Marina Commercial Hub', latitude: 6.4531, longitude: 3.3958, status: 'pending' },
     ]
   },
   {
     id: 'trp-003',
+    driver_id: 'd-7',
+    driver_name: 'Kayode Adeleke',
+    vehicle_plate: 'LAG-492-AA',
+    status: 'active',
+    waypoints: [
+      { id: 'wp-301', trip_id: 'trp-003', sequence: 0, name: 'Oshodi Freight Terminal', latitude: 6.5562, longitude: 3.3486, status: 'visited' },
+      { id: 'wp-302', trip_id: 'trp-003', sequence: 1, name: 'Mushin Wholesale Depot', latitude: 6.5312, longitude: 3.3551, status: 'pending' },
+      { id: 'wp-303', trip_id: 'trp-003', sequence: 2, name: 'Alaba International Market', latitude: 6.4619, longitude: 3.1901, status: 'pending' },
+    ]
+  },
+  {
+    id: 'trp-004',
+    driver_id: 'd-8',
+    driver_name: 'Samuel Osei',
+    vehicle_plate: 'ABJ-881-XY',
+    status: 'active',
+    waypoints: [
+      { id: 'wp-401', trip_id: 'trp-004', sequence: 0, name: 'Lekki Phase 1 Depot', latitude: 6.4478, longitude: 3.4723, status: 'visited' },
+      { id: 'wp-402', trip_id: 'trp-004', sequence: 1, name: 'Chevron Drive Fulfillment', latitude: 6.4385, longitude: 3.5350, status: 'pending' },
+      { id: 'wp-403', trip_id: 'trp-004', sequence: 2, name: 'Ajah Express Hub', latitude: 6.4698, longitude: 3.5670, status: 'pending' },
+    ]
+  },
+  {
+    id: 'trp-005',
+    driver_id: 'd-9',
+    driver_name: 'Usman Danjuma',
+    vehicle_plate: 'KND-104-BB',
+    status: 'active',
+    waypoints: [
+      { id: 'wp-501', trip_id: 'trp-005', sequence: 0, name: 'Berger Central Station', latitude: 6.6433, longitude: 3.3768, status: 'visited' },
+      { id: 'wp-502', trip_id: 'trp-005', sequence: 1, name: 'Magodo Phase 2 Center', latitude: 6.6190, longitude: 3.3850, status: 'pending' },
+      { id: 'wp-503', trip_id: 'trp-005', sequence: 2, name: 'Alausa Secretariat Depot', latitude: 6.6178, longitude: 3.3582, status: 'pending' },
+    ]
+  },
+  {
+    id: 'trp-006',
+    driver_id: 'd-10',
+    driver_name: 'Babatunde Lawal',
+    vehicle_plate: 'PHC-552-LK',
+    status: 'assigned',
+    waypoints: [
+      { id: 'wp-601', trip_id: 'trp-006', sequence: 0, name: 'Trade Fair Complex', latitude: 6.4520, longitude: 3.2420, status: 'pending' },
+      { id: 'wp-602', trip_id: 'trp-006', sequence: 1, name: 'Festac Town Depot', latitude: 6.4682, longitude: 3.2845, status: 'pending' },
+      { id: 'wp-603', trip_id: 'trp-006', sequence: 2, name: 'Mile 2 Interchange', latitude: 6.4610, longitude: 3.3180, status: 'pending' },
+    ]
+  },
+  {
+    id: 'trp-007',
+    driver_id: 'd-11',
+    driver_name: 'Chinedu Eze',
+    vehicle_plate: 'IBD-302-MN',
+    status: 'assigned',
+    waypoints: [
+      { id: 'wp-701', trip_id: 'trp-007', sequence: 0, name: 'Maryland Mall Hub', latitude: 6.5714, longitude: 3.3667, status: 'pending' },
+      { id: 'wp-702', trip_id: 'trp-007', sequence: 1, name: 'Anthony Village Logistics', latitude: 6.5580, longitude: 3.3690, status: 'pending' },
+      { id: 'wp-703', trip_id: 'trp-007', sequence: 2, name: 'Gbagada Expressway Center', latitude: 6.5510, longitude: 3.3860, status: 'pending' },
+    ]
+  },
+  {
+    id: 'trp-008',
     driver_id: 'd-3',
     driver_name: 'Tunde Balogun',
     vehicle_plate: 'KND-104-BB',
     status: 'completed',
     waypoints: [
-      { id: 'wp-301', trip_id: 'trp-003', sequence: 0, name: 'Lekki Phase 1 Fulfillment', latitude: 6.4478, longitude: 3.4723, status: 'visited' },
-      { id: 'wp-302', trip_id: 'trp-003', sequence: 1, name: 'Ajah Express Hub', latitude: 6.4698, longitude: 3.5670, status: 'visited' },
+      { id: 'wp-801', trip_id: 'trp-008', sequence: 0, name: 'Ikorodu Port Terminal', latitude: 6.6150, longitude: 3.5080, status: 'visited' },
+      { id: 'wp-802', trip_id: 'trp-008', sequence: 1, name: 'Ojota Transfer Hub', latitude: 6.5830, longitude: 3.3840, status: 'visited' },
     ]
   }
 ];
@@ -134,9 +198,10 @@ const DEFAULT_FUEL_LOGS: FuelLog[] = [
   { id: 'flog-1', vehicle_id: 'v-1', vehicle_plate: 'LAG-492-AA', driver_id: 'd-1', driver_name: 'Babajide Okafor', amount_liters: 45, cost_ngn: 58500, timestamp: new Date(Date.now() - 3600000 * 24).toISOString() },
   { id: 'flog-2', vehicle_id: 'v-2', vehicle_plate: 'ABJ-881-XY', driver_id: 'd-2', driver_name: 'Chinedu Musa', amount_liters: 60, cost_ngn: 78000, timestamp: new Date(Date.now() - 3600000 * 12).toISOString() },
   { id: 'flog-3', vehicle_id: 'v-3', vehicle_plate: 'KND-104-BB', driver_id: 'd-3', driver_name: 'Tunde Balogun', amount_liters: 50, cost_ngn: 65000, timestamp: new Date(Date.now() - 3600000 * 4).toISOString() },
+  { id: 'flog-4', vehicle_id: 'v-5', vehicle_plate: 'KAN-710-AB', driver_id: 'd-5', driver_name: 'Emeka Nnamdi', amount_liters: 85, cost_ngn: 110500, timestamp: new Date(Date.now() - 3600000 * 6).toISOString() },
 ];
 
-const CURRENT_DATA_VERSION = 'routeiq_v4_2026_09_19';
+const CURRENT_DATA_VERSION = 'routeiq_v5_2026_09_19';
 
 // Helper to load/save localStorage with automatic cache purging
 const getLocalStorageItem = <T>(key: string, defaultValue: T): T => {
